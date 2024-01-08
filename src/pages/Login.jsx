@@ -1,22 +1,50 @@
-import React, {useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, {useState ,useEffect} from 'react'
+import { Link,useNavigate } from 'react-router-dom';
+function Login() {
 
-function Register() {
+  const navigate = useNavigate();
+  const [c_values, c_setValues] = useState({ 
+    email : "",
+    password : "",
+  
+  })
+
+  const [v_values, v_setValues] = useState({
+    phonenumber: 0,
+    password : "",
+  })
+
   const [swapPanel, setSwapPanel] = useState(false);
 
+  useEffect(() => {
+    // if(localStorage.getItem("food_delivery-user")){
+    //   navigate("/");
+    // }
+  }, [])
   const signUpButton = () => {
     setSwapPanel(true);
   };
   const signInButton = () => {
     setSwapPanel(false);
   };
-const handleChange = () => {
+  const c_handleChange = (event) => {
+    c_setValues({...c_values, [event.target.name] : event.target.value})
+  }
+  const v_handleChange = (event) => {
+    v_setValues({...v_values, [event.target.name] : event.target.value})
+  }
 
+const c_handleSubmit = async(event) => {
+  event.preventDefault();
+  const {email, password} = c_values;
+  // navigate("/");
+}
+const v_handleSubmit = async(event) => {
+  event.preventDefault();
+  const {phonenumber, password} = v_values;
+  // navigate("/");
 }
 
-const handleSubmit = () => {
-
-}
   return (
     <div className="sigin">
       <div
@@ -29,7 +57,7 @@ const handleSubmit = () => {
       {/* Vendor Form */}
 
       <div className="form-container sign-up-container">
-        <form onSubmit={(event) => handleSubmit(event)}>
+        <form onSubmit={(event) => v_handleSubmit(event)}>
           <div className="brand">
             {/* <img src={Logo} alt="logo" /> */}
             <h1>IIT Bhilai Store</h1>
@@ -39,26 +67,32 @@ const handleSubmit = () => {
           placeholder="Phone Number" 
           name="phonenumber"
           pattern="[6-9]\d{9}"
-          title='Enter valid phone number'
-          onChange={(e) => handleChange(e)}
+          title='Enter valid phone number' 
+          required
+          onChange={(e) => v_handleChange(e)}
           />
           <input 
           type="password" 
           placeholder="Password" 
           name="password"
-          onChange={(e) => handleChange(e)}
+          required
+          onChange={(e) => v_handleChange(e)}
           />
-          <button type='submit'>Login</button>
-          <span>
-          New here? Create a account! <Link to="/register">Register</Link>
-          </span>
+          <div className="button-div">
+            <button type='submit'>Login</button>
+            <span>
+            New here? Create a account! <Link to="/register">Register</Link>
+            </span>
+          </div>
+          {console.log(v_values)}
         </form>
       </div>
+      
 
 {/* Student form */}
 
       <div className="form-container sign-in-container">
-        <form onSubmit={(event) => handleSubmit(event)}>
+        <form onSubmit={(event) => c_handleSubmit(event)}>
           <div className="brand">
             {/* <img src={Logo} alt="logo" /> */}
             <h1>IIT Bhilai Store</h1>
@@ -69,26 +103,31 @@ const handleSubmit = () => {
           name="email"
           pattern= "[a-z0-9]+@iitbhilai.ac.in"
           title = "inafer" required
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => c_handleChange(e)}
           />
           <input 
           type="password" 
           placeholder="Password" 
-          name="password"
-          onChange={(e) => handleChange(e)}
+          name="password" required
+          onChange={(e) => c_handleChange(e)}
           />
-          <button type='submit'>Login</button>
-          <span>
-          New here? Create a account! <Link to="/register">Register</Link>
-          </span>
+          <div className="button-div">
+            <button type='submit'>Login</button>
+            <span>
+            New here? Create a account! <Link to="/register">Register</Link>
+            </span>
+          </div>
+          {console.log(c_values)}
         </form>
       </div>
+      
 
       <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-left">
+            <img className = "imglogo" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
             <h1>Welcome Vendor!</h1>
-              <p>Thanks for joining with us! Register Here. If you are a customer, click below</p>
+              <p>Thanks for joining with us! login Here. If you are a customer, click below</p>
               <button
                 type="button"
                 onClick={signInButton}
@@ -99,10 +138,11 @@ const handleSubmit = () => {
               </button>
             </div>
             <div className="overlay-panel overlay-right">
-            <h1>Hello Customer!</h1>
+              <img className = "imglogo" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
+              <h1>Hello Customer!</h1>
               <p>
                 If you are a customer, Login with your Institute credentials.
-                If you are a vendor, Register below.
+                If you are a vendor, click below.
               </p>
               <button
                 type="button"
@@ -121,4 +161,4 @@ const handleSubmit = () => {
   )
 }
 
-export default Register
+export default Login
