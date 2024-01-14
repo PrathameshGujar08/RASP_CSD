@@ -1,14 +1,16 @@
 import React, {useState ,useEffect} from 'react'
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function Login() {
 
   const navigate = useNavigate();
+  // Customer infomation values
   const [c_values, c_setValues] = useState({ 
     email : "",
     password : "",
   
   })
 
+  // Vendor information values
   const [v_values, v_setValues] = useState({
     phonenumber: 0,
     password : "",
@@ -17,30 +19,42 @@ function Login() {
   const [swapPanel, setSwapPanel] = useState(false);
 
   useEffect(() => {
-    // if(localStorage.getItem("food_delivery-user")){
-    //   navigate("/");
-    // }
+    if(localStorage.getItem("current-food-delivery-user")){
+      navigate("/");
+    }
   }, [])
+
   const signUpButton = () => {
     setSwapPanel(true);
   };
   const signInButton = () => {
     setSwapPanel(false);
   };
+
+  // Storing values for customer
   const c_handleChange = (event) => {
     c_setValues({...c_values, [event.target.name] : event.target.value})
   }
+  // Storing values of vendor
   const v_handleChange = (event) => {
     v_setValues({...v_values, [event.target.name] : event.target.value})
   }
 
 const c_handleSubmit = async(event) => {
   event.preventDefault();
-  const {email, password} = c_values;
+  const {username, email, password} = c_values;
+  localStorage.setItem('current-food-delivery-user', JSON.stringify({
+    username,
+    email
+  }))
+  navigate("/")
   // navigate("/");
 }
 const v_handleSubmit = async(event) => {
   event.preventDefault();
+  // Destructure the v_values
+
+  // Navigate to vendor page if previously logged in information is stored
   const {phonenumber, password} = v_values;
   // navigate("/");
 }
@@ -59,7 +73,6 @@ const v_handleSubmit = async(event) => {
       <div className="form-container sign-up-container">
         <form onSubmit={(event) => v_handleSubmit(event)}>
           <div className="brand">
-            {/* <img src={Logo} alt="logo" /> */}
             <h1>IIT Bhilai Store</h1>
           </div>
           <input 
@@ -89,7 +102,7 @@ const v_handleSubmit = async(event) => {
       </div>
       
 
-{/* Student form */}
+      {/* Student form */}
 
       <div className="form-container sign-in-container">
         <form onSubmit={(event) => c_handleSubmit(event)}>
