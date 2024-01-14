@@ -13,7 +13,6 @@ function Home(){
             <Header/>
         </section>
         <div className='contentm'>
-            
             <HomeCategoryScroll/>      
             <div className='hdiv2'>
                 <h2>Food delivery in IIT Bhilai</h2>

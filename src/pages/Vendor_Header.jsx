@@ -9,7 +9,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
-function Header() {
+function Vendor_Header() {
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
     const callAboutUser = async () => {
@@ -33,8 +33,9 @@ function Header() {
             console.log(err);
         }
     }
+
     useEffect(() => {
-        if(localStorage.getItem("current-food-delivery-user"))
+        if(localStorage.getItem("current-food-delivery-vendor"))
         {
             setShow(true);
         }
@@ -42,7 +43,7 @@ function Header() {
 
     // Function to Handle Logout Click
     let handle_Logout_Click = () => {
-        localStorage.removeItem("current-food-delivery-user")
+        localStorage.removeItem("current-food-delivery-vendor")
         navigate("/login")
     }
     return (
@@ -54,15 +55,7 @@ function Header() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style ={{height:50}}>
-                        <Form className="d-flex input-group">
-                            
-                                {/* <span className="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span> */}
-                                <FormControl 
-                                    type="search" placeholder="Search" className="me-2" aria-label="Search" style ={{width:500}}
-                                />
-                        
-                            <Button variant="outline-light"><i class="fa-solid fa-magnifying-glass"></i></Button>
-                        </Form>
+
                         <Nav.Link className="navtext" href="/">Home</Nav.Link>
                         {show ? 
                             <>
@@ -87,4 +80,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default Vendor_Header;

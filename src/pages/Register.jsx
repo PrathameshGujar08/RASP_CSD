@@ -32,7 +32,7 @@ function Register() {
   const [swapPanel, setSwapPanel] = useState(false);
 
   useEffect(() => {
-    if(localStorage.getItem("food_delivery-user")){
+    if(localStorage.getItem("current-food-delivery-user")){
       navigate("/");
     }
   }, [])
@@ -54,9 +54,18 @@ const v_handleChange = (event) => {
 
 const c_handleSubmit = async(event) => {
   event.preventDefault();
+
+  // Destructing values of c_values
   const {username, email, password,confirmpassword} = c_values;
-    // console.log(values);
-    if(password !== confirmpassword){
+  
+  //Storing values to local storage
+  localStorage.setItem('current-food-delivery-user', JSON.stringify({
+    username,
+    email
+  }))
+  navigate("/")
+  // console.log(c_values.username);
+  if(password !== confirmpassword){
       // toast.error("Your Password and confirm Password do not match.", toastconf);
     }
     else{
@@ -79,7 +88,6 @@ const c_handleSubmit = async(event) => {
 const v_handleSubmit = async(event) => {
   event.preventDefault();
   const {username, phonenumber,shopname, password,confirmpassword} = v_values;
-    // console.log(values);
     if(password !== confirmpassword){
       // toast.error("Your Password and confirm Password do not match.", toastconf);
     }
