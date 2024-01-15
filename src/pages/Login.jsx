@@ -1,5 +1,7 @@
 import React, {useState ,useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
+
 function Login() {
 
   const navigate = useNavigate();
@@ -42,21 +44,53 @@ function Login() {
 
 const c_handleSubmit = async(event) => {
   event.preventDefault();
-  const {username, email, password} = c_values;
-  localStorage.setItem('current-food-delivery-user', JSON.stringify({
-    username,
-    email
-  }))
-  navigate("/")
+  event.preventDefault();
+  const {email, password} = c_values;
   // navigate("/");
+  const response = await axios.post("http://localhost:8000/login", {
+    "email":email,
+    "password":password,
+    "role":"user"
+  })
+ console.log(response)
+  if(response.status === false)
+  {
+    console.log("error");
+    // toast.error(data.msg, toastconf);
+  }
+  else
+  {
+    // console.log(data)
+    localStorage.removeItem('food-delivery-phone')
+    localStorage.setItem('food-delivery-email', JSON.stringify(response.data.ID));
+    localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
+      
+      navigate("/")
+  } 
 }
 const v_handleSubmit = async(event) => {
   event.preventDefault();
-  // Destructure the v_values
-
-  // Navigate to vendor page if previously logged in information is stored
   const {phonenumber, password} = v_values;
   // navigate("/");
+  const response = await axios.post("http://localhost:8000/login", {
+    "phone":phonenumber,
+    "password":password,
+    "role":"vendor"
+  })
+  console.log("here is the respone after loggin in vendor", response)
+  if(response.status === false)
+  {
+    console.log("error");
+    // toast.error(data.msg, toastconf);
+  }
+  else
+  {
+    localStorage.removeItem('food-delivery-email')
+    localStorage.setItem('food-delivery-phone', JSON.stringify(response.data.ID));
+    localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
+      
+      navigate("/")
+  } 
 }
 
   return (

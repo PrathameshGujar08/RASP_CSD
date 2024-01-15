@@ -1,9 +1,9 @@
 import React, {useState ,useEffect} from 'react'
 import { Link , useNavigate} from 'react-router-dom';
 // import { ToastContainer, toast } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 // import { registerRoute } from '../utils/APIRoutes';
-// import axios from 'axios'
+import axios from 'axios'
 function Register() {
 
   const navigate = useNavigate();
@@ -54,58 +54,62 @@ const v_handleChange = (event) => {
 
 const c_handleSubmit = async(event) => {
   event.preventDefault();
-
-  // Destructing values of c_values
   const {username, email, password,confirmpassword} = c_values;
-  
-  //Storing values to local storage
-  localStorage.setItem('current-food-delivery-user', JSON.stringify({
-    username,
-    email
-  }))
-  navigate("/")
-  // console.log(c_values.username);
-  if(password !== confirmpassword){
+    // console.log(values);
+    if(password !== confirmpassword){
       // toast.error("Your Password and confirm Password do not match.", toastconf);
+      alert("Your Password and confirm Password do not match.")
     }
     else{
-      // const { data } = await axios.post(registerRoute, {
-      //   username,
-      //   email,
-      //   password,
-      // })
-      // if(data.status === false)
-      // {
-      //   toast.error(data.msg, toastconf);
-      // }
-      // if(data.status === true)
-      // {
-      //     localStorage.setItem('food-delivery-user', JSON.stringify(data.user));
-      //     navigate("/")
-      // } 
+      const response = await axios.post("http://localhost:8000/register", {
+        "name":username,
+        "email":email,
+        "password":password,
+        "role":"user"
+      })
+      if(response.status === false)
+      {
+        alert("error registering from server")
+        // toast.error(data.msg, toastconf);
+      }
+      else
+      {
+        // localStorage.setItem('food-delivery-user', JSON.stringify(data.user));
+        console.log("succesfully registered!");
+        alert("success in registration !")
+
+          navigate("/")
+      } 
     }     
 }
 const v_handleSubmit = async(event) => {
   event.preventDefault();
   const {username, phonenumber,shopname, password,confirmpassword} = v_values;
+    // console.log(values);
     if(password !== confirmpassword){
       // toast.error("Your Password and confirm Password do not match.", toastconf);
+      alert("Your Password and confirm Password do not match.")
+
     }
     else{
-      // const { data } = await axios.post(registerRoute, {
-      //   username,
-      //   email,
-      //   password,
-      // })
-      // if(data.status === false)
-      // {
-      //   toast.error(data.msg, toastconf);
-      // }
-      // if(data.status === true)
-      // {
-      //     localStorage.setItem('food-delivery-user', JSON.stringify(data.user));
-      //     navigate("/")
-      // } 
+      const response = await axios.post("http://localhost:8000/register", {
+        "shopname":shopname,
+        "name":username,
+        "phone":phonenumber,
+        "password":password,
+        "role":"vendor"
+      })
+      if(response.status === false)
+      {
+        alert("error registering vendor from server")
+        // toast.error(data.msg, toastconf);
+      }
+      else
+      {
+          // localStorage.setItem('food-delivery-vendor', JSON.stringify(data.user));
+          alert("success in registration !")
+          navigate("/")
+      }  
     }     
 }
 
@@ -139,12 +143,12 @@ const v_handleSubmit = async(event) => {
           title='Enter valid phone number'
           onChange={(e) => v_handleChange(e)}
           />
-          {/* <input 
+          { <input 
           type="text" 
           placeholder="Shop Name" 
           name="shopname"  required
           onChange={(e) => v_handleChange(e)}
-          /> */}
+          /> }
           <input 
           type="password" 
           placeholder="Password" 
