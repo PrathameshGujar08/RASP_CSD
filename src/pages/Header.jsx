@@ -69,6 +69,7 @@ function Header() {
                                 <NavDropdown title="Name" id="nav-dropdown">
                                     <NavDropdown.Item href="profile_endpoint">Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
+                                    <NavDropdown.Item href="/cart">Cart</NavDropdown.Item>
                                     <NavDropdown.Item onClick={handle_Logout_Click}>Logout</NavDropdown.Item>
                                 </NavDropdown>
                             </>

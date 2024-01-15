@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Restaurant from './pages/Restaurant';
 import Cart from './pages/Cart';
-import Vendor_page from './pages/Vendor_admin'
+import Vendor_admin from './pages/Vendor_admin';
 function App() {
   return (
     <BrowserRouter>
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Home/>}></Route>
         <Route path="/cart" element={<Cart/>}></Route>
         <Route path="/restaurant" element={<Restaurant/>}></Route>
-        <Route path="/vendor_admin" element={<Vendor_page />}></Route>
+        <Route path="/vendor_admin" element={<Vendor_admin/>}></Route>
       </Routes>
     </BrowserRouter>
   );

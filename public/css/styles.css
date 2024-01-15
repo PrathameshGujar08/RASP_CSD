@@ -647,3 +647,31 @@
   background-color: #fafafa; 
 
 }
+
+/* Vendor Header */
+.topnav {
+  background-color: #584b95;
+  height: 100px;
+  padding: 13px;
+  margin-top: -10px;
+  padding-right: 0;
+  margin-left: 50px;
+  margin-right: -10px;
+  text-align: center;
+  font-style: Georgia;
+  font-size: 200px;
+  z-index: 0;
+}
+
+/* vendor header sidenav */
+#sdb{
+  background-color: #584b95;
+}
+#sdtg{
+  margin-bottom: 1.6rem;
+}
+.vendor_imgheader{
+  width: 70px;
+  height: auto;
+  margin-left: 15rem;
+}
