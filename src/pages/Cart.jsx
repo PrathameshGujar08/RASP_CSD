@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import { CartItem } from "./Cards";
+import Button from 'react-bootstrap/Button';
 
 function Cart() {
     return (
@@ -12,12 +13,11 @@ function Cart() {
                 
                     {/* delivery details div */}
                     <div className='cartLeft'>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
+                        <h4>Delivery Details</h4>
+                        <input className="cartInput" type="text"  placeholder="Fullname" name="suggestions"/> 
+                        <input className="cartInput" type="text"  placeholder="Mobile No." name="suggestions"/> 
+                        <input className="cartInput" type="text"  placeholder="Delivery Address" name="suggestions"/> 
+                        <Button style={{width:'100%', marginTop:'2rem'}} variant="success" >PROCEED TO PAY</Button>
                         
                     </div>
 
