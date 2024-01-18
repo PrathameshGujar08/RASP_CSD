@@ -1,8 +1,19 @@
 import React, {useState ,useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
+ 
 
 function Login() {
+    const toastconf = {
+    position :  toast.POSITION.TOP_CENTER,
+    autoClose : 8000,
+    draggable : true,
+    pauseOnHover : true,
+    theme : 'light',
+    
+  };
 
   const navigate = useNavigate();
   // Customer infomation values
@@ -47,51 +58,48 @@ const c_handleSubmit = async(event) => {
   event.preventDefault();
   const {email, password} = c_values;
   // navigate("/");
-  const response = await axios.post("http://localhost:8000/login", {
-    "email":email,
-    "password":password,
-    "role":"user"
-  })
- console.log(response)
-  if(response.status === false)
-  {
-    console.log("error");
-    // toast.error(data.msg, toastconf);
-  }
-  else
-  {
-    // console.log(data)
+  try{
+    const response = await axios.post("http://localhost:8000/login", {
+      "email":email,
+      "password":password,
+      "role":"user"
+    })
     localStorage.removeItem('food-delivery-phone')
     localStorage.setItem('food-delivery-email', JSON.stringify(response.data.ID));
     localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
-      
+    toast.success("Login Succesful", toastconf);
+    setTimeout(() => {
       navigate("/")
-  } 
+    }, 3000);
+} catch (error){
+    // console.log("error catch hogyi", error)
+    toast.error("User or Password does not match", toastconf);
+
+  }
+
 }
 const v_handleSubmit = async(event) => {
   event.preventDefault();
   const {phonenumber, password} = v_values;
   // navigate("/");
+  try{
   const response = await axios.post("http://localhost:8000/login", {
     "phone":phonenumber,
     "password":password,
     "role":"vendor"
   })
-  console.log("here is the respone after loggin in vendor", response)
-  if(response.status === false)
-  {
-    console.log("error");
-    // toast.error(data.msg, toastconf);
+  localStorage.removeItem('food-delivery-email')
+  localStorage.setItem('food-delivery-phone', JSON.stringify(response.data.ID));
+  localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
+  toast.success("Login Succesful", toastconf);
+  setTimeout(() => {
+    navigate("/")
+  }, 3000);
+} catch (error){
+    toast.error("User or Password does not match");
   }
-  else
-  {
-    localStorage.removeItem('food-delivery-email')
-    localStorage.setItem('food-delivery-phone', JSON.stringify(response.data.ID));
-    localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
-      
-      navigate("/")
-  } 
 }
+
 
   return (
     <div className="sigin">
@@ -105,6 +113,7 @@ const v_handleSubmit = async(event) => {
       {/* Vendor Form */}
 
       <div className="form-container sign-up-container">
+      
         <form onSubmit={(event) => v_handleSubmit(event)}>
           <div className="brand">
             <h1>IIT Bhilai Store</h1>
@@ -133,6 +142,7 @@ const v_handleSubmit = async(event) => {
           </div>
           {console.log(v_values)}
         </form>
+        <ToastContainer/>
       </div>
       
 
@@ -166,6 +176,8 @@ const v_handleSubmit = async(event) => {
           </div>
           {console.log(c_values)}
         </form>
+        <ToastContainer/>
+
       </div>
       
 
