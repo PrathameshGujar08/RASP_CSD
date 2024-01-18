@@ -2,13 +2,15 @@ import React, {useState ,useEffect} from 'react'
 import { Link , useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 // import { registerRoute } from '../utils/APIRoutes';
 import axios from 'axios'
 function Register() {
 
   const navigate = useNavigate();
   const toastconf = {
-    position :  toast.POSITION.TOP_CENTER,
+    position :  toast.POSITION.TOP_RIGHT,
     autoClose : 8000,
     draggable : true,
     pauseOnHover : true,
@@ -84,8 +86,8 @@ const v_handleSubmit = async(event) => {
   const {username, phonenumber,shopname, password,confirmpassword} = v_values;
     // console.log(values);
     if(password !== confirmpassword){
-      // toast.error("Your Password and confirm Password do not match.", toastconf);
-      alert("Your Password and confirm Password do not match.")
+      toast.error("Your Password and confirm Password do not match.", toastconf);
+      // alert("Your Password and confirm Password do not match.")
 
     }
     else{
@@ -212,6 +214,7 @@ const v_handleSubmit = async(event) => {
           </div>
           
         </form>
+        <ToastContainer />
         <ToastContainer />
       </div>
       {console.log(c_values)}
