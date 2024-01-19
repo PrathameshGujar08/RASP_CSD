@@ -2,6 +2,8 @@ import React, {useState ,useEffect} from 'react'
 import { Link , useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 // import { registerRoute } from '../utils/APIRoutes';
 import axios from 'axios'
 function Register() {
@@ -58,30 +60,27 @@ const c_handleSubmit = async(event) => {
     // console.log(values);
     if(password !== confirmpassword){
       toast.error("Your Password and confirm Password do not match.", toastconf);
-      alert("Your Password and confirm Password do not match.")
+      // alert("Your Password and confirm Password do not match.")
     }
     else{
+
+      try{
       const response = await axios.post("http://localhost:8000/register", {
         "name":username,
         "email":email,
         "password":password,
         "role":"user"
       })
-      if(response.status === false)
-      {
-        alert("error registering from server")
-        // toast.error(data.msg, toastconf);
-      }
-      else
-      {
-        // localStorage.setItem('food-delivery-user', JSON.stringify(data.user));
-        console.log("succesfully registered!");
-        alert("success in registration !")
-
-          navigate("/")
+        toast.success("Registration succesful!", toastconf)
+        setTimeout(() => {
+          navigate("/login")
+        }, 2000);
+    } catch(error){
+      toast.error(error, toastconf)
+    }
       } 
-    }     
-}
+  }     
+
 const v_handleSubmit = async(event) => {
   event.preventDefault();
   const {username, phonenumber,shopname, password,confirmpassword} = v_values;
@@ -92,6 +91,7 @@ const v_handleSubmit = async(event) => {
 
     }
     else{
+      try{
       const response = await axios.post("http://localhost:8000/register", {
         "shopname":shopname,
         "name":username,
@@ -99,17 +99,14 @@ const v_handleSubmit = async(event) => {
         "password":password,
         "role":"vendor"
       })
-      if(response.status === false)
-      {
-        alert("error registering vendor from server")
-        // toast.error(data.msg, toastconf);
-      }
-      else
-      {
-          // localStorage.setItem('food-delivery-vendor', JSON.stringify(data.user));
-          alert("success in registration !")
-          navigate("/")
-      }  
+      toast.success("Registration succesful!", toastconf)    
+      setTimeout(() => {
+        navigate("/login")
+      }, 2000);
+    } catch(error){
+      toast.error(error, toastconf)
+    }
+
     }     
 }
 
@@ -170,7 +167,7 @@ const v_handleSubmit = async(event) => {
          
         </form>
 
-        <ToastContainer /> 
+        <ToastContainer />
       </div>
       {console.log(v_values)}
 
@@ -217,6 +214,7 @@ const v_handleSubmit = async(event) => {
           </div>
           
         </form>
+        <ToastContainer />
         <ToastContainer />
       </div>
       {console.log(c_values)}
