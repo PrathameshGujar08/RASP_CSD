@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Menu from './Menu';
+
 import Categories from './Categories';
-import items from './data';
+import items from './TryData/data';
 import Header from "../components/Header";
 import { RFoodItem } from "../components/Cards";
 const allCategories = ['all', ...new Set(items.map(item => item.category))];
@@ -18,6 +18,11 @@ function Restaurant() {
         const newItems = items.filter((item) => item.category === category);
         setMenuItems(newItems);
     };
+    function create_menu(items){
+        return(
+            <RFoodItem id={items.id} title={items.title} img={items.img} desc={items.desc} price={items.price} key={items.id} />
+        );
+    };
     return (
         <div>
             <Header/>
@@ -31,7 +36,7 @@ function Restaurant() {
                         
                     </div>
                     <div className='rightDiv'>
-                        <Menu items={menuItems} />
+                        {menuItems.map(create_menu)}
                     </div>
                 </div>
             </div>

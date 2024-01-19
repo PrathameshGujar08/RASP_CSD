@@ -1,9 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+
 import Header from "../components/Header";
 import { CartItem } from "../components/Cards";
+import cartData from './TryData/cartData';
+
 
 function Cart() {
+    function create_cart(items){
+        return(
+            <CartItem id={items.id} name={items.name} price={items.price} key={items.id} />
+        );
+    };
     return (
         <div >
             <Header/>
@@ -12,12 +21,11 @@ function Cart() {
                 
                     {/* delivery details div */}
                     <div className='cartLeft'>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
-                        <h1>me</h1>
+                        <h4>Delivery Details</h4>
+                        <input className="cartInput" type="text"  placeholder="Fullname" name="suggestions"/> 
+                        <input className="cartInput" type="text"  placeholder="Mobile No." name="suggestions"/> 
+                        <input className="cartInput" type="text"  placeholder="Delivery Address" name="suggestions"/> 
+                        <Button style={{width:'100%', marginTop:'2rem'}} variant="success" >PROCEED TO PAY</Button>
                         
                     </div>
 
@@ -35,9 +43,8 @@ function Cart() {
                         </div>
 
                         {/* food items */}
-                        <CartItem/>
-                        <CartItem/>
-                        <CartItem/>
+                        
+                        {cartData.map(create_cart)}
                         
                         {/* suggestion box */}
                         <input className="cartInput"

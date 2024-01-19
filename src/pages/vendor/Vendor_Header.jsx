@@ -9,7 +9,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
-function Header() {
+function Vendor_Header() {
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
     const callAboutUser = async () => {
@@ -33,8 +33,9 @@ function Header() {
             console.log(err);
         }
     }
+
     useEffect(() => {
-        if(localStorage.getItem("food-delivery-token"))
+        if(localStorage.getItem("current-food-delivery-vendor"))
         {
             setShow(true);
         }
@@ -42,34 +43,24 @@ function Header() {
 
     // Function to Handle Logout Click
     let handle_Logout_Click = () => {
-        localStorage.removeItem("food-delivery-token")
+        localStorage.removeItem("current-food-delivery-vendor")
         navigate("/login")
     }
     return (
         <div className="navbar-container">
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container >
-                    <img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
-                    <h1>IIT BHILAI</h1>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
+                    <div style={{display:'flex'}}>
+                        <img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
+                        <h1 style={{marginTop:'1rem'}}>IIT BHILAI</h1>
+                    </div>
+                    
                     <Nav className="me-auto" style ={{height:50}}>
-                        <Form className="d-flex input-group">
-                            
-                                {/* <span className="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span> */}
-                                <FormControl 
-                                    type="search" placeholder="Search" className="me-2" aria-label="Search" style ={{width:500}}
-                                />
-                        
-                            <Button variant="outline-light"><i class="fa-solid fa-magnifying-glass"></i></Button>
-                        </Form>
-                        <Nav.Link className="navtext" href="/">Home</Nav.Link>
                         {show ? 
                             <>
                                 <NavDropdown title="Name" id="nav-dropdown">
                                     <NavDropdown.Item href="profile_endpoint">Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
-                                    <NavDropdown.Item href="/cart">Cart</NavDropdown.Item>
                                     <NavDropdown.Item onClick={handle_Logout_Click}>Logout</NavDropdown.Item>
                                 </NavDropdown>
                             </>
@@ -81,11 +72,10 @@ function Header() {
                         }
                         
                     </Nav>
-                    </Navbar.Collapse>
                 </Container>
             </Navbar>
         </div>
     );
 }
 
-export default Header;
+export default Vendor_Header;

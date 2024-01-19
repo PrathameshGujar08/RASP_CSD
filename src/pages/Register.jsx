@@ -8,7 +8,6 @@ import { registerRoute } from '../utils/APIroutes';
 function Register() {
 
   const navigate = useNavigate();
-
   const toastconf = {
     position :  toast.POSITION.TOP_RIGHT,
     autoClose : 8000,
@@ -66,35 +65,26 @@ const c_handleSubmit = async(event) => {
   const {username, email, password, confirmpassword} = c_values;
     if(password !== confirmpassword){
       toast.error("Your Password and confirm Password do not match.", toastconf);
+      // alert("Your Password and confirm Password do not match.")
     }
     else{
-      // const config = {
-      //   headers : {
-      //     "Content-Type" : "application/json"
-      //   }
-      // };
-      // Data to be sent on the backend.
-      let data=({
-        name : username,
-        email : email,
-        password : password,
-        role : "user"
-      })
 
-      const response = await axios.post(registerRoute, data);
-      if(response.status === false)
-      {
-        toast.error(response.msg, toastconf);
-      }
-      else
-      {
-        // Setting up offline functionality for user session storage
-        localStorage.setItem('food-delivery-user', JSON.stringify(response.user));
-        // Navigate to Home Page
-        navigate("/")
+      try{
+      const response = await axios.post(registerRoute, {
+        "name":username,
+        "email":email,
+        "password":password,
+        "role":"user"
+      })
+        toast.success("Registration succesful!", toastconf)
+        setTimeout(() => {
+          navigate("/login")
+        }, 2000);
+    } catch(error){
+      toast.error(error, toastconf)
+    }
       } 
-    }     
-}
+  }     
 
 const v_handleSubmit = async(event) => {
 // Prevent auto refresh
@@ -107,6 +97,7 @@ const v_handleSubmit = async(event) => {
       alert("Your Password and confirm Password do not match.")
     }
     else{
+      try{
       const response = await axios.post(registerRoute, {
         "shopname":shopname,
         "name":username,
@@ -114,17 +105,14 @@ const v_handleSubmit = async(event) => {
         "password":password,
         "role":"vendor"
       })
-      if(response.status === false)
-      {
-        alert("error registering vendor from server")
-        // toast.error(data.msg, toastconf);
-      }
-      else
-      {
-          // localStorage.setItem('food-delivery-vendor', JSON.stringify(data.user));
-          alert("success in registration !")
-          navigate("/")
-      }  
+      toast.success("Registration succesful!", toastconf)    
+      setTimeout(() => {
+        navigate("/login")
+      }, 2000);
+    } catch(error){
+      toast.error(error, toastconf)
+    }
+
     }     
 }
 
