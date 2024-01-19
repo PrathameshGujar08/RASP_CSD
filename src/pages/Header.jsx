@@ -34,7 +34,7 @@ function Header() {
         }
     }
     useEffect(() => {
-        if(localStorage.getItem("current-food-delivery-user"))
+        if(localStorage.getItem("food-delivery-token"))
         {
             setShow(true);
         }
@@ -42,7 +42,7 @@ function Header() {
 
     // Function to Handle Logout Click
     let handle_Logout_Click = () => {
-        localStorage.removeItem("current-food-delivery-user")
+        localStorage.removeItem("food-delivery-token")
         navigate("/login")
     }
     return (

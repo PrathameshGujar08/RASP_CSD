@@ -50,13 +50,12 @@ function Vendor_Header() {
         <div className="navbar-container">
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container >
-                    <img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
-                    <h1>IIT BHILAI</h1>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
+                    <div style={{display:'flex'}}>
+                        <img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
+                        <h1 style={{marginTop:'1rem'}}>IIT BHILAI</h1>
+                    </div>
+                    
                     <Nav className="me-auto" style ={{height:50}}>
-
-                        <Nav.Link className="navtext" href="/">Home</Nav.Link>
                         {show ? 
                             <>
                                 <NavDropdown title="Name" id="nav-dropdown">
@@ -73,7 +72,6 @@ function Vendor_Header() {
                         }
                         
                     </Nav>
-                    </Navbar.Collapse>
                 </Container>
             </Navbar>
         </div>

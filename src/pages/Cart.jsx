@@ -1,10 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "./Header";
-import { CartItem } from "./Cards";
 import Button from 'react-bootstrap/Button';
 
+import Header from "./Header";
+import { CartItem } from "./Cards";
+import cartData from './TryData/cartData';
+
+
 function Cart() {
+    function create_cart(items){
+        return(
+            <CartItem id={items.id} name={items.name} price={items.price} key={items.id} />
+        );
+    };
     return (
         <div >
             <Header/>
@@ -35,9 +43,8 @@ function Cart() {
                         </div>
 
                         {/* food items */}
-                        <CartItem/>
-                        <CartItem/>
-                        <CartItem/>
+                        
+                        {cartData.map(create_cart)}
                         
                         {/* suggestion box */}
                         <input className="cartInput"
