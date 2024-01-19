@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "./Header";
-import { CartItem } from "./Cards";
+import Header from "../components/Header";
+import { CartItem } from "../components/Cards";
 
 function Cart() {
     return (

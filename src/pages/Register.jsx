@@ -1,19 +1,21 @@
+// imports
 import React, {useState ,useEffect} from 'react'
 import { Link , useNavigate} from 'react-router-dom';
-// import { ToastContainer, toast } from 'react-toastify'; 
-// import 'react-toastify/dist/ReactToastify.css';
-// import { registerRoute } from '../utils/APIRoutes';
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
+import { registerRoute } from '../utils/APIroutes';
 function Register() {
 
   const navigate = useNavigate();
-  // const toastconf = {
-  //   position :  toast.POSITION.TOP_RIGHT,
-  //   autoClose : 8000,
-  //   draggable : true,
-  //   pauseOnHover : true,
-  //   theme : 'light',
-  // };
+
+  const toastconf = {
+    position :  toast.POSITION.TOP_RIGHT,
+    autoClose : 8000,
+    draggable : true,
+    pauseOnHover : true,
+    theme : 'light',
+  };
 
   const [c_values, c_setValues] = useState({
     username : "",
@@ -41,58 +43,71 @@ function Register() {
   const signUpButton = () => {
     setSwapPanel(true);
   };
+
   const signInButton = () => {
     setSwapPanel(false);
   };
 
+  // Settig variables for customer 
 const c_handleChange = (event) => {
   c_setValues({...c_values, [event.target.name] : event.target.value})
 }
+
+// Setting variables for vendor
 const v_handleChange = (event) => {
   v_setValues({...v_values, [event.target.name] : event.target.value})
 }
 
+// Handling submit and syntax checking for input values.
 const c_handleSubmit = async(event) => {
+// Prevent auto refresh
   event.preventDefault();
-  const {username, email, password,confirmpassword} = c_values;
-    // console.log(values);
+
+  const {username, email, password, confirmpassword} = c_values;
     if(password !== confirmpassword){
-      // toast.error("Your Password and confirm Password do not match.", toastconf);
-      alert("Your Password and confirm Password do not match.")
+      toast.error("Your Password and confirm Password do not match.", toastconf);
     }
     else{
-      const response = await axios.post("http://localhost:8000/register", {
-        "name":username,
-        "email":email,
-        "password":password,
-        "role":"user"
+      // const config = {
+      //   headers : {
+      //     "Content-Type" : "application/json"
+      //   }
+      // };
+      // Data to be sent on the backend.
+      let data=({
+        name : username,
+        email : email,
+        password : password,
+        role : "user"
       })
+
+      const response = await axios.post(registerRoute, data);
       if(response.status === false)
       {
-        alert("error registering from server")
-        // toast.error(data.msg, toastconf);
+        toast.error(response.msg, toastconf);
       }
       else
       {
-        // localStorage.setItem('food-delivery-user', JSON.stringify(data.user));
-        console.log("succesfully registered!");
-        alert("success in registration !")
-
-          navigate("/")
+        // Setting up offline functionality for user session storage
+        localStorage.setItem('food-delivery-user', JSON.stringify(response.user));
+        // Navigate to Home Page
+        navigate("/")
       } 
     }     
 }
-const v_handleSubmit = async(event) => {
-  event.preventDefault();
-  const {username, phonenumber,shopname, password,confirmpassword} = v_values;
-    // console.log(values);
-    if(password !== confirmpassword){
-      // toast.error("Your Password and confirm Password do not match.", toastconf);
-      alert("Your Password and confirm Password do not match.")
 
+const v_handleSubmit = async(event) => {
+// Prevent auto refresh
+  event.preventDefault();
+
+  const {username, phonenumber,shopname, password,confirmpassword} = v_values;
+
+  if(password !== confirmpassword){
+      toast.error("Your Password and confirm Password do not match.", toastconf);
+      alert("Your Password and confirm Password do not match.")
     }
     else{
-      const response = await axios.post("http://localhost:8000/register", {
+      const response = await axios.post(registerRoute, {
         "shopname":shopname,
         "name":username,
         "phone":phonenumber,
@@ -170,9 +185,8 @@ const v_handleSubmit = async(event) => {
          
         </form>
 
-        {/* <ToastContainer /> */}
+        <ToastContainer />
       </div>
-      {console.log(v_values)}
 
 {/* Student form */}
 
@@ -217,9 +231,8 @@ const v_handleSubmit = async(event) => {
           </div>
           
         </form>
-        {/* <ToastContainer /> */}
+        <ToastContainer />
       </div>
-      {console.log(c_values)}
 
       <div className="overlay-container">
           <div className="overlay">

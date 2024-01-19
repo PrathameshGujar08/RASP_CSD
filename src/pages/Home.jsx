@@ -1,9 +1,9 @@
 import React, {useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
-import Header from './Header';
+import Header from '../components/Header';
 import HomeCategoryScroll from './HomeCategoryScroll';
-import { RName } from './Cards';
-import Footer from './Footer';
+import { RName } from '../components/Cards';
+import Footer from '../components/Footer';
 function Home(){
     const sliderRef = useRef(null);
     const scrollAmount = 100;
@@ -17,7 +17,7 @@ function Home(){
             <div className='hdiv2'>
                 <h2>Food delivery in IIT Bhilai</h2>
                 <div className='hres_container'>
-                    <div class="row">
+                    <div className="row">
                         <RName/>
                         <RName/>
                         <RName/>

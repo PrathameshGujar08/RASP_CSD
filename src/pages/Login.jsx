@@ -1,6 +1,7 @@
 import React, {useState ,useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { loginRoute } from '../utils/APIroutes';
 
 function Login() {
 
@@ -43,16 +44,17 @@ function Login() {
   }
 
 const c_handleSubmit = async(event) => {
+
   event.preventDefault();
-  event.preventDefault();
+  
   const {email, password} = c_values;
   // navigate("/");
-  const response = await axios.post("http://localhost:8000/login", {
+  const response = await axios.post(loginRoute, {
     "email":email,
     "password":password,
     "role":"user"
   })
- console.log(response)
+  console.log(response.message)
   if(response.status === false)
   {
     console.log("error");
@@ -72,12 +74,12 @@ const v_handleSubmit = async(event) => {
   event.preventDefault();
   const {phonenumber, password} = v_values;
   // navigate("/");
-  const response = await axios.post("http://localhost:8000/login", {
+  const response = await axios.post(loginRoute, {
     "phone":phonenumber,
     "password":password,
     "role":"vendor"
   })
-  console.log("here is the respone after loggin in vendor", response)
+  {alert(response)}
   if(response.status === false)
   {
     console.log("error");

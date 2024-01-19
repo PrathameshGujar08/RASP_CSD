@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Menu from './Menu';
 import Categories from './Categories';
 import items from './data';
-import Header from "./Header";
-import { RFoodItem } from "./Cards";
+import Header from "../components/Header";
+import { RFoodItem } from "../components/Cards";
 const allCategories = ['all', ...new Set(items.map(item => item.category))];
 function Restaurant() {
     const [menuItems, setMenuItems] = useState(items);

@@ -17,7 +17,7 @@ function HomeCategoryScroll(){
                     container.scrollLeft -= scrollAmount; // Scroll left by the specified amount
                     }}
                 >
-                    <i class="fa-solid fa-chevron-left"></i>
+                    <i className="fa-solid fa-chevron-left"></i>
                 </button>
                 {/* Image container */}
                 <div className="home-menu-images-container" ref={sliderRef}>
@@ -69,7 +69,7 @@ function HomeCategoryScroll(){
                     container.scrollLeft += scrollAmount; // Scroll right by the specified amount
                     }}
                 >
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <i className="fa-solid fa-chevron-right"></i>
                 </button>
             </div>            
 

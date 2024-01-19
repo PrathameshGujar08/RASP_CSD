@@ -10,10 +10,7 @@ export default function vendor_admin() {
             expand="lg"
             >
             
-            </Navbar>
-            
-            
-            
+            </Navbar>    
         </div>
         <Sidebar/>
         
