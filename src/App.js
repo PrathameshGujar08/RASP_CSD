@@ -16,10 +16,8 @@ function App() {
         <Route path="/cart" element={<Cart/>}></Route>
         <Route path="/restaurant" element={<Restaurant/>}></Route>
         <Route path="/profile_endpoint" element={<Profile />}></Route>
-
          {/*vendor pages  */}
          <Route path="/vendor" element={<Vendor />}></Route>
-
       </Routes>
     </BrowserRouter>
   );

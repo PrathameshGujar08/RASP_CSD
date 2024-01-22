@@ -19,7 +19,7 @@ const Vendor= () => {
   return (
   <>
     <Vendor_Header/>
-    <div style={{display:'flex'}}>
+    <div style={{display:'flex',  height: '100%' }}>
       <div id="header">
         <ProSidebar>
           <SidebarContent>

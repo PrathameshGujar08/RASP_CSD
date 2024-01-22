@@ -1,8 +1,8 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 
-import Header from "./Header";
-import { OrderHistItem } from "./Cards";
+import Header from "../components/Header";
+import { OrderHistItem } from "../components/Cards";
 import orderHistData from "./TryData/orderHistData";
 // user profile page
 function Profile() {

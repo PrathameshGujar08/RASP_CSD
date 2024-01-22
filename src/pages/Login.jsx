@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import { loginRoute } from '../utils/APIroutes'
  
 
 function Login() {
@@ -54,12 +55,13 @@ function Login() {
   }
 
 const c_handleSubmit = async(event) => {
+
   event.preventDefault();
-  event.preventDefault();
+  
   const {email, password} = c_values;
   // navigate("/");
   try{
-    const response = await axios.post("http://localhost:8000/login", {
+    const response = await axios.post( loginRoute , {
       "email":email,
       "password":password,
       "role":"user"
@@ -83,7 +85,7 @@ const v_handleSubmit = async(event) => {
   const {phonenumber, password} = v_values;
   // navigate("/");
   try{
-  const response = await axios.post("http://localhost:8000/login", {
+  const response = await axios.post( loginRoute , {
     "phone":phonenumber,
     "password":password,
     "role":"vendor"

@@ -1,11 +1,11 @@
 import React, {useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 
-import Header from './Header';
-import HomeCategoryScroll from './HomeCategoryScroll';
-import { RName } from './Cards';
+import Header from '../components/Header';
+import HomeCategoryScroll from '../components/HomeCategoryScroll';
+import { RName } from '../components/Cards';
 import restName from './TryData/restName';
-import Footer from './Footer';
+import Footer from '../components/Footer';
 function Home(){
     const sliderRef = useRef(null);
     const scrollAmount = 100;

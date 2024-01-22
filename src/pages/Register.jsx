@@ -1,9 +1,10 @@
+// imports
 import React, {useState ,useEffect} from 'react'
 import { Link , useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
-// import { registerRoute } from '../utils/APIRoutes';
 import axios from 'axios'
+import { registerRoute } from '../utils/APIroutes';
 function Register() {
 
   const navigate = useNavigate();
@@ -41,21 +42,27 @@ function Register() {
   const signUpButton = () => {
     setSwapPanel(true);
   };
+
   const signInButton = () => {
     setSwapPanel(false);
   };
 
+  // Settig variables for customer 
 const c_handleChange = (event) => {
   c_setValues({...c_values, [event.target.name] : event.target.value})
 }
+
+// Setting variables for vendor
 const v_handleChange = (event) => {
   v_setValues({...v_values, [event.target.name] : event.target.value})
 }
 
+// Handling submit and syntax checking for input values.
 const c_handleSubmit = async(event) => {
+// Prevent auto refresh
   event.preventDefault();
-  const {username, email, password,confirmpassword} = c_values;
-    // console.log(values);
+
+  const {username, email, password, confirmpassword} = c_values;
     if(password !== confirmpassword){
       toast.error("Your Password and confirm Password do not match.", toastconf);
       // alert("Your Password and confirm Password do not match.")
@@ -63,7 +70,7 @@ const c_handleSubmit = async(event) => {
     else{
 
       try{
-      const response = await axios.post("http://localhost:8000/register", {
+      const response = await axios.post(registerRoute, {
         "name":username,
         "email":email,
         "password":password,
@@ -80,17 +87,18 @@ const c_handleSubmit = async(event) => {
   }     
 
 const v_handleSubmit = async(event) => {
+// Prevent auto refresh
   event.preventDefault();
-  const {username, phonenumber,shopname, password,confirmpassword} = v_values;
-    // console.log(values);
-    if(password !== confirmpassword){
-      toast.error("Your Password and confirm Password do not match.", toastconf);
-      // alert("Your Password and confirm Password do not match.")
 
+  const {username, phonenumber,shopname, password,confirmpassword} = v_values;
+
+  if(password !== confirmpassword){
+      toast.error("Your Password and confirm Password do not match.", toastconf);
+      alert("Your Password and confirm Password do not match.")
     }
     else{
       try{
-      const response = await axios.post("http://localhost:8000/register", {
+      const response = await axios.post(registerRoute, {
         "shopname":shopname,
         "name":username,
         "phone":phonenumber,
@@ -167,7 +175,6 @@ const v_handleSubmit = async(event) => {
 
         <ToastContainer />
       </div>
-      {console.log(v_values)}
 
 {/* Student form */}
 
@@ -213,9 +220,7 @@ const v_handleSubmit = async(event) => {
           
         </form>
         <ToastContainer />
-        <ToastContainer />
       </div>
-      {console.log(c_values)}
 
       <div className="overlay-container">
           <div className="overlay">

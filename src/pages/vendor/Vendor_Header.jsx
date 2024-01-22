@@ -4,13 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Button from 'react-bootstrap/Button';
 
 function Vendor_Header() {
-    const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
     const callAboutUser = async () => {
         try {
@@ -37,7 +32,6 @@ function Vendor_Header() {
     useEffect(() => {
         if(localStorage.getItem("current-food-delivery-vendor"))
         {
-            setShow(true);
         }
     }, []);
 
@@ -52,24 +46,12 @@ function Vendor_Header() {
                 <Container >
                     <div style={{display:'flex'}}>
                         <img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
-                        <h1 style={{marginTop:'1rem'}}>IIT BHILAI</h1>
+                        <h1 style={{marginTop:'1rem'}}>CAMPDEL</h1>
                     </div>
                     
                     <Nav className="me-auto" style ={{height:50}}>
-                        {show ? 
-                            <>
-                                <NavDropdown title="Name" id="nav-dropdown">
-                                    <NavDropdown.Item href="profile_endpoint">Profile</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
-                                    <NavDropdown.Item onClick={handle_Logout_Click}>Logout</NavDropdown.Item>
-                                </NavDropdown>
-                            </>
-                            :
-                            <>
-                                <Nav.Link className="navtext" href="/login">Login</Nav.Link>
-                                <Nav.Link className="navtext" href="/register">Register</Nav.Link>
-                            </>
-                        }
+                        <Nav.Link className="navtext" onClick={handle_Logout_Click}>Logout</Nav.Link>
+                        
                         
                     </Nav>
                 </Container>

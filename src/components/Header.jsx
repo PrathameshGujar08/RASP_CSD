@@ -50,17 +50,16 @@ function Header() {
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container >
                     <img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
-                    <h1>IIT BHILAI</h1>
+                    <h1>CAMPDEL</h1>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style ={{height:50}}>
-                        <Form className="d-flex input-group">
-                            
-                                {/* <span className="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span> */}
+                        <Form className="d-flex" style={{marginRight:'8rem'}}>
+                            <div className="input-group">
                                 <FormControl 
-                                    type="search" placeholder="Search" className="me-2" aria-label="Search" style ={{width:500}}
+                                    type="search" placeholder="Search" className="me-2" aria-label="Search" style ={{width:400}}
                                 />
-                        
+                            </div>
                             <Button variant="outline-light"><i class="fa-solid fa-magnifying-glass"></i></Button>
                         </Form>
                         <Nav.Link className="navtext" href="/">Home</Nav.Link>
@@ -68,7 +67,7 @@ function Header() {
                             <>
                                 <NavDropdown title="Name" id="nav-dropdown">
                                     <NavDropdown.Item href="profile_endpoint">Profile</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
+                                    <NavDropdown.Item href="/cart">Cart</NavDropdown.Item>
                                     <NavDropdown.Item onClick={handle_Logout_Click}>Logout</NavDropdown.Item>
                                 </NavDropdown>
                             </>

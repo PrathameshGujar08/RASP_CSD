@@ -197,6 +197,7 @@
       margin-top: 2rem;
       padding: 0 40px;
       text-align: center;
+      margin-top: 2rem;
       top: 0;
       height: 100%;
       width: 50%;
@@ -358,9 +359,9 @@
   }
   /* Customize the input group */
   .input-group {
-    padding-left: 30px;
+    margin-left: 5rem;
     width: 10px; /* Adjust width as needed */
-    margin-right: 70px; /* Optional margin between search bar and button */
+    /* Optional margin between search bar and button */
 }
 
 /* Style the input inside the input group */
@@ -410,7 +411,7 @@
   }
   .home-menu-image {
     width: 150px;
-    height: auto;
+    height: 150px;
     margin: 30px;
     border-radius: 50%;
     margin-bottom: 5px; 
@@ -732,8 +733,12 @@
 /* vendor page */
   /* sidebar */
   #header {
-    position: absolute;
-    width: 13%;
+    /* position: absolute;
+    width: 13%; */
+    flex: 0 0 13%; /* Set a fixed width for the sidebar */
+  display: flex;
+  flex-direction: column;
+    
     }
     #header .closemenu {
     color: white;
@@ -745,7 +750,8 @@
     #header .pro-sidebar {
     width: 100%;
     min-width: 100%;
-    height: 100vh;
+    /* height: 100vh; */ 
+    flex: 1;
     }
     #header .pro-sidebar.collapsed {
     width: 80px;
@@ -789,10 +795,31 @@
     }
     }
   .vendorRightDiv{
-    border: 2px solid black;
     flex: 1;
     width: 50%;
-    padding: 2rem;
-    margin-left: 12.5rem; /* Add margin between the sidebar and content */
-    
+    padding: 1rem;
+    overflow: auto;
+  }
+
+  /* vendor menu page */
+  .menuDiv{
+    padding: 1rem;
+  }
+  .product-in-stock {
+    color: green;
+  }
+  
+  .product-out-of-stock {
+    color: red;
+  }
+  /* add item in vendor menu page */
+  .VendorAddModal-content {
+    position: absolute;
+    left: 25%;
+    top : 20%;
+    background: white;
+    padding: 14px 28px;
+    border-radius: 3px;
+    width: 50%;
+    height : 60%;
   }

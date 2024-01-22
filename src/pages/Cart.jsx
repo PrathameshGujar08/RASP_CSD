@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 
-import Header from "./Header";
-import { CartItem } from "./Cards";
+import Header from "../components/Header";
+import { CartItem } from "../components/Cards";
 import cartData from './TryData/cartData';
 
 

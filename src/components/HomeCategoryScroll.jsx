@@ -17,7 +17,7 @@ function HomeCategoryScroll(){
                     container.scrollLeft -= scrollAmount; // Scroll left by the specified amount
                     }}
                 >
-                    <i class="fa-solid fa-chevron-left"></i>
+                    <i className="fa-solid fa-chevron-left"></i>
                 </button>
                 {/* Image container */}
                 <div className="home-menu-images-container" ref={sliderRef}>
@@ -26,28 +26,28 @@ function HomeCategoryScroll(){
                         <h5 style={{ marginTop: '5px' }} >Pizza</h5>
                     </div>
                     <div style={{ textAlign: 'center' }}> 
-                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
-                        <h5 style={{ marginTop: '5px' }} >Pizza</h5>
+                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/maggi.jpg'} />
+                        <h5 style={{ marginTop: '5px' }} >Maggi</h5>
                     </div>
                     <div style={{ textAlign: 'center' }}> 
-                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
-                        <h5 style={{ marginTop: '5px' }} >Pizza</h5>
+                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pasta.jpg'} />
+                        <h5 style={{ marginTop: '5px' }} >Pasta</h5>
                     </div>
                     <div style={{ textAlign: 'center' }}> 
-                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
-                        <h5 style={{ marginTop: '5px' }}> Pizza</h5>
+                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/shakes.jpg'} />
+                        <h5 style={{ marginTop: '5px' }}> Shakes</h5>
                     </div>
                     <div style={{ textAlign: 'center' }}> 
-                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
-                        <h5 style={{ marginTop: '5px' }} >Pizza</h5>
+                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/chinese.jpg'} />
+                        <h5 style={{ marginTop: '5px' }} >Chinese</h5>
                     </div>
                     <div style={{ textAlign: 'center' }}> 
-                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
-                        <h5 style={{ marginTop: '5px' }} >Pizza</h5>
+                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/dosa.jpg'} />
+                        <h5 style={{ marginTop: '5px' }} >South Indian</h5>
                     </div>
                     <div style={{ textAlign: 'center' }}> 
-                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
-                        <h5 style={{ marginTop: '5px' }} >Pizza</h5>
+                        <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/juice.jpeg'} />
+                        <h5 style={{ marginTop: '5px' }} >Juice</h5>
                     </div>
                     
                     
@@ -69,7 +69,7 @@ function HomeCategoryScroll(){
                     container.scrollLeft += scrollAmount; // Scroll right by the specified amount
                     }}
                 >
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <i className="fa-solid fa-chevron-right"></i>
                 </button>
             </div>            
 
