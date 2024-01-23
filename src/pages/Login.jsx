@@ -7,8 +7,10 @@ import { loginRoute } from '../utils/APIroutes'
  
 
 function Login() {
-    const toastconf = {
-    position :  toast.POSITION.TOP_CENTER,
+  const store_name = "CAMPDEL";
+
+  const toastconf = {
+    position :  toast.POSITION.TOP_RIGHT,
     autoClose : 8000,
     draggable : true,
     pauseOnHover : true,
@@ -118,7 +120,7 @@ const v_handleSubmit = async(event) => {
       
         <form onSubmit={(event) => v_handleSubmit(event)}>
           <div className="brand">
-            <h1>IIT Bhilai Store</h1>
+            <h1>{store_name}</h1>
           </div>
           <input 
           type="tel" 
@@ -154,7 +156,7 @@ const v_handleSubmit = async(event) => {
         <form onSubmit={(event) => c_handleSubmit(event)}>
           <div className="brand">
             {/* <img src={Logo} alt="logo" /> */}
-            <h1>IIT Bhilai Store</h1>
+            <h1>{store_name}</h1>
           </div>
           <input 
           type="email" 

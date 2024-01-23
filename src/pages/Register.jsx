@@ -8,6 +8,7 @@ import { registerRoute } from '../utils/APIroutes';
 function Register() {
 
   const navigate = useNavigate();
+  const store_name = "CAMPDEL";
   const toastconf = {
     position :  toast.POSITION.TOP_RIGHT,
     autoClose : 8000,
@@ -68,18 +69,25 @@ const c_handleSubmit = async(event) => {
       // alert("Your Password and confirm Password do not match.")
     }
     else{
-
       try{
-      const response = await axios.post(registerRoute, {
-        "name":username,
-        "email":email,
-        "password":password,
-        "role":"user"
-      })
-        toast.success("Registration succesful!", toastconf)
+        const data = {
+          "name":username,
+          "email":email,
+          "password":password,
+          "role":"user"
+        }
+      const response = await axios.post(registerRoute, data)
+    
+        toast.success("Sending OTP...A", toastconf)
+        sessionStorage.setItem("food-delivery-email", JSON.stringify(
+          { 
+           email
+          }
+        ))
         setTimeout(() => {
-          navigate("/login")
-        }, 2000);
+          navigate("/verifyotp")
+        }, 1000);
+        
     } catch(error){
       toast.error(error, toastconf)
     }
@@ -130,7 +138,7 @@ const v_handleSubmit = async(event) => {
       <div className="form-container sign-up-container">
         <form onSubmit={(event) => v_handleSubmit(event)}>
           <div className="brand">
-            <h1>IIT Bhilai Store</h1>
+            <h1>{store_name}</h1>
           </div>
           <input 
           type="text" 
@@ -146,12 +154,12 @@ const v_handleSubmit = async(event) => {
           title='Enter valid phone number'
           onChange={(e) => v_handleChange(e)}
           />
-          { <input 
+          <input 
           type="text" 
           placeholder="Shop Name" 
           name="shopname"  required
           onChange={(e) => v_handleChange(e)}
-          /> }
+          />
           <input 
           type="password" 
           placeholder="Password" 
@@ -182,7 +190,7 @@ const v_handleSubmit = async(event) => {
         <form onSubmit={(event) => c_handleSubmit(event)}>
           <div className="brand">
             {/* <img src={Logo} alt="logo" /> */}
-            <h1>IIT Bhilai Store</h1>
+            <h1>{store_name}</h1>
           </div>
           <input 
           type="text" 

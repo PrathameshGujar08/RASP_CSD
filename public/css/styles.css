@@ -823,3 +823,42 @@
     width: 50%;
     height : 60%;
   }
+
+  .otp-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40vh; 
+    margin: 20px;
+  }
+
+  /* OTP verification */
+  .otp-block{
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    justify-content: center;
+    border-radius: 20px;
+    align-items: center;
+    text-align: center;
+    border: 1px dotted #584b95;
+    background-color: #f3f3f3;
+    padding: 20px;
+    overflow-wrap: break-word;
+  }
+
+  .otp-container .otp-block img{
+    height: 50px;
+    width : 100px;
+  }
+
+  .otp-Submit{
+    border-radius: 4px;
+    margin: 10px;
+  }
+
+  .otp-form{
+    display: flex;
+    flex-direction: column;
+  }

@@ -6,6 +6,7 @@ import Restaurant from './pages/Restaurant';
 import Cart from './pages/Cart';
 import Vendor from './pages/vendor/Vendor_admin'
 import { Profile } from './pages/Profile';
+import OtpVerification from './pages/OtpVerification';
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App() {
         <Route path="/profile_endpoint" element={<Profile />}></Route>
          {/*vendor pages  */}
          <Route path="/vendor" element={<Vendor />}></Route>
+         <Route path="/verifyotp" element={<OtpVerification />}></Route>
       </Routes>
     </BrowserRouter>
   );
