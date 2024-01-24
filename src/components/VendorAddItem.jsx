@@ -144,7 +144,7 @@ function VendorAddItem() {
                     </div>
                 </div>
                 {console.log(product)}
-                    <Button onClick={submitProduct} style={{width:'100%', marginTop:'2rem', backgroundColor:'#584b95'}}>PROCEED TO ADD</Button>
+                    <Button onClick={submitProduct} style={{width:'100%', marginTop:'2rem',marginBottom:'1rem', backgroundColor:'#584b95'}}>PROCEED TO ADD</Button>
         </div>
     );
 }

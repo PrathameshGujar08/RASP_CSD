@@ -22,10 +22,10 @@ function Profile() {
                         <h4 style={{margin: '0'}}>Riyanshi Goyal</h4>
                         <p > riyanshigoyal@iitbhilai.ac.in</p>
                     </div>
-                    <Button 
+                    {/* <Button 
                         style={{marginLeft:'12rem', marginBottom:'1rem', backgroundColor: '#584b95', border:'none'}} >
                         Edit profile
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
 

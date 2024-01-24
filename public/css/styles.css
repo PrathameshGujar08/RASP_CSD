@@ -797,7 +797,7 @@
   .vendorRightDiv{
     flex: 1;
     width: 50%;
-    padding: 1rem;
+    padding: 1.5rem;
     overflow: auto;
   }
 
@@ -821,9 +821,10 @@
     padding: 14px 28px;
     border-radius: 3px;
     width: 50%;
-    height : 60%;
+    height : auto;
   }
 
+  /* OTP verification */
   .otp-container {
     display: flex;
     flex-direction: column;
@@ -833,8 +834,12 @@
     margin: 20px;
   }
 
-  /* OTP verification */
   .otp-block{
+    position: absolute;
+    left: 35%;
+    top : 18%;
+    width: 30%;
+    height : auto;
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
@@ -844,7 +849,7 @@
     text-align: center;
     border: 1px dotted #584b95;
     background-color: #f3f3f3;
-    padding: 20px;
+    padding: 2rem 1rem;
     overflow-wrap: break-word;
   }
 
@@ -861,4 +866,41 @@
   .otp-form{
     display: flex;
     flex-direction: column;
+  }
+  .otpInput{
+    width:100%;
+    margin-top: 1rem;
+    padding: 8px; 
+    border-radius: 5px; 
+    border: 1px solid black;
+    background-color: #fafafa; 
+  
+  }
+
+  /*vendor  dashboard page */
+  .dashboard_topDiv{
+    display: flex;
+    height: 12rem;
+    background-color: #fafafa;
+    border-radius: 16px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+    0 10px 10px rgba(0,0,0,0.22);
+    padding: 1rem;
+  
+  }
+  .dashboard_topDiv img{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 8px;
+    
+  }
+  .VendorImageModal-content {
+    position: absolute;
+    left: 35%;
+    top : 20%;
+    background: white;
+    padding: 14px 28px;
+    border-radius: 3px;
+    width: 30%;
+    height : auto;
   }
