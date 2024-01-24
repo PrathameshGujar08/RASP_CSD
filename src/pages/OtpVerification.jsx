@@ -31,7 +31,10 @@ export default function OtpVerification() {
       })
       if(response.status === 201){
         toast.success("Registration succesful!", toastconf)
-        navigate("/login")
+        setTimeout(()=>{
+            navigate("/login");
+        },2000);
+        
       }
       else{
         console.log("nahi hua kuch")
