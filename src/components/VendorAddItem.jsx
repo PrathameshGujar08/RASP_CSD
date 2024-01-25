@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
 import {ref,uploadBytesResumable,getDownloadURL} from "firebase/storage";
-
+import axios from 'axios'
 import storage from "../services/firebase";
+import { itemRoute } from "../utils/APIroutes";
+
 
 // add item button funcationality in vendor menu page
 function VendorAddItem() {
@@ -18,7 +20,8 @@ function VendorAddItem() {
         description:"",
         price: Number,
         category:"",
-        stock : "Available"
+        stock : "Available",
+        img:""
 
     });
     function handleChange(event){
@@ -61,7 +64,13 @@ function VendorAddItem() {
             () => {
                 // download url
                 getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    setImageURL(url);
+                    var urlFinal = url.split("%2F")
+                    setImageURL(urlFinal.pop());
+                    
+                    setProduct({
+                        ...product,
+                        img: imageURL,
+                    })
                 });
             }
         );
@@ -69,7 +78,20 @@ function VendorAddItem() {
     };
 
     const submitProduct=async(event)=>{
-        console.log(product);
+        const token = JSON.parse(localStorage.getItem('food-delivery-token'));
+        const config = {
+            headers: {
+                "Content-Type":'application/x-www-form-urlencoded'
+            }
+        }
+        try{
+        const response = await axios.post(
+            itemRoute, {"token": token, "product":product}
+        )
+        window.alert("ADDED")
+        } catch(error){
+            console.log(error)
+        }
         // event.preventDefault();
         // const newProduct={
         //     // id:productId,

@@ -7,9 +7,20 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { Dropdown } from 'primereact/dropdown';
 import vendorMenu from '../TryData/vendorMenu';
 import VendorAddItem from '../../components/VendorAddItem';
+import { jwtDecode } from 'jwt-decode'
+import axios from 'axios'
+import { itemRoute } from '../../utils/APIroutes';
+
 
 function FMenu() {
+
+    const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+    const url = itemRoute.concat("/").concat(token.id)
     
+    // axios.get(url, {crossDomain: true}).then((response) => {
+    //     console.log(response.data[1].img)
+    // })
+
     const handleDeleteRow = (rowData) => {
         // Implement logic to delete the row from the state or API
         window.alert(rowData.name+ "this is the code" + rowData.code);
