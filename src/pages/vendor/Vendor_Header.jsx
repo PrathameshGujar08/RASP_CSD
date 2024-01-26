@@ -7,6 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Vendor_Header() {
     const navigate = useNavigate();
+    const[show, setShow]=React.useState(false);
     const callAboutUser = async () => {
         try {
             // const res = await fetch(process.env.REACT_APP_BACKEND_URL+"api/users/aboutuser", {
@@ -30,14 +31,15 @@ function Vendor_Header() {
     }
 
     useEffect(() => {
-        if(localStorage.getItem("current-food-delivery-vendor"))
+        if(localStorage.getItem("food-delivery-token"))
         {
+            setShow(true);
         }
     }, []);
 
     // Function to Handle Logout Click
     let handle_Logout_Click = () => {
-        localStorage.removeItem("current-food-delivery-vendor")
+        localStorage.removeItem("food-delivery-token")
         navigate("/login")
     }
     return (

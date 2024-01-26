@@ -97,7 +97,7 @@ const v_handleSubmit = async(event) => {
   localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
   toast.success("Login Succesful", toastconf);
   setTimeout(() => {
-    navigate("/")
+    navigate("/vendor")
   }, 3000);
 } catch (error){
     toast.error("User or Password does not match");

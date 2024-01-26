@@ -8,10 +8,12 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
+import { jwtDecode } from 'jwt-decode'
 
 function Header() {
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
+    const[token, setToken]=React.useState();
     const callAboutUser = async () => {
         try {
             // const res = await fetch(process.env.REACT_APP_BACKEND_URL+"api/users/aboutuser", {
@@ -36,6 +38,7 @@ function Header() {
     useEffect(() => {
         if(localStorage.getItem("food-delivery-token"))
         {
+            setToken(jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token'))));
             setShow(true);
         }
     }, []);
@@ -65,7 +68,7 @@ function Header() {
                         <Nav.Link className="navtext" href="/">Home</Nav.Link>
                         {show ? 
                             <>
-                                <NavDropdown title="Name" id="nav-dropdown">
+                                <NavDropdown title={token.userID} id="nav-dropdown">
                                     <NavDropdown.Item href="profile_endpoint">Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="/cart">Cart</NavDropdown.Item>
                                     <NavDropdown.Item onClick={handle_Logout_Click}>Logout</NavDropdown.Item>

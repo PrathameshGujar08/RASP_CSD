@@ -1,16 +1,27 @@
-import React from "react";
-import Button from 'react-bootstrap/Button';
-
+import React, {useEffect} from "react";
+import {useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'
 import Header from "../components/Header";
 import { OrderHistItem } from "../components/Cards";
 import orderHistData from "./TryData/orderHistData";
 // user profile page
 function Profile() {
+    const navigate = useNavigate();
     function create_orderHist(items){
         return(
             <OrderHistItem id={items.id} img={items.img} restaurant={items.restaurant} status={items.status} orderNo={items.orderNo} total={items.total} foodItems={items.foodItems} time={items.time} key={items.id} />
         );
     };
+
+    useEffect(() => {
+        if(localStorage.getItem("food-delivery-token"))
+        {
+            const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+            if(token.userRole != "user"){
+              navigate("/login");
+            }
+        }
+    }, []);
     return (
         <div >
             <Header/>

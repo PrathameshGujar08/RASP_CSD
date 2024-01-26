@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'
 import {ProSidebar,Menu,MenuItem,SidebarContent,} from "react-pro-sidebar";
 import { FaList} from "react-icons/fa";
 import { MdFastfood } from "react-icons/md";
@@ -11,11 +13,21 @@ import Dashboard from "./Dashboard";
 import FMenu from "./FMenu";
 import Orders from "./Orders";
 const Vendor= () => {
+  const navigate = useNavigate();
   const [selectedMenuItem, setSelectedMenuItem] = useState("home");
 
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
   };
+  useEffect(() => {
+      if(localStorage.getItem("food-delivery-token"))
+      {
+          const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+          if(token.userRole != "vendor"){
+            navigate("/login");
+          }
+      }
+  }, []);
   return (
   <>
     <Vendor_Header/>

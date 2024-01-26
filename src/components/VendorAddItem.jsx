@@ -21,7 +21,6 @@ function VendorAddItem() {
         price: Number,
         category:"",
         stock : "Available",
-        img:""
 
     });
     function handleChange(event){
@@ -61,17 +60,16 @@ function VendorAddItem() {
                 setPercent(percent);
             },
             (err) => console.log(err),
-            () => {
-                // download url
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    var urlFinal = url.split("%2F")
+            async () => {
+                try{
+                    const url=await getDownloadURL(uploadTask.snapshot.ref);
+                    const urlFinal = url.split("%2F");
                     setImageURL(urlFinal.pop());
-                    
-                    setProduct({
-                        ...product,
-                        img: imageURL,
-                    })
-                });
+                    console.log(imageURL);   
+                }
+                catch(error){
+                    console.log("error getting the url:", error);
+                }
             }
         );
         }
@@ -79,6 +77,16 @@ function VendorAddItem() {
 
     const submitProduct=async(event)=>{
         const token = JSON.parse(localStorage.getItem('food-delivery-token'));
+        console.log(token);
+        console.log(product)
+        const newProduct={
+            name: product.name,
+            description:product.description,
+            price: product.price,
+            category:product.category,
+            stock : product.stock,
+            img:imageURL
+        }
         const config = {
             headers: {
                 "Content-Type":'application/x-www-form-urlencoded'
@@ -86,46 +94,16 @@ function VendorAddItem() {
         }
         try{
         const response = await axios.post(
-            itemRoute, {"token": token, "product":product}
+            itemRoute, {"token": token, "product":newProduct}
         )
-        window.alert("ADDED")
+        
+        window.alert("ADDED");
+        window.location.reload();
         } catch(error){
             console.log(error)
         }
-        // event.preventDefault();
-        // const newProduct={
-        //     // id:productId,
-        //     name: product.name,
-        //     description:product.description,
-        //     price:product.price,
-        //     category:product.category,
-        //     quantity:product.quantity,
-
-        //     token:tokens,
-        //     image:imageURL
-        // }
-        
-        // try {
-        //     const config={
-        //         headers: {
-        //             "Content-Type":"application/json"
-        //         }
-        //     };
-        //     const {data}= await axios.post(
-        //         process.env.REACT_APP_BACKEND_URL+"api/users/product/update",newProduct,config
-        //     );
-        //     window.alert("New product updated successfully");
-        // } catch (error) {
-        //     console.log(error.response.data);
-        // }
     };
     useEffect(() => {
-
-        // const user = JSON.parse(localStorage.getItem('userInfo'));
-        // if (user) {
-        //  setToken(user.token);
-        // }
-
         if (!selectedFile) {
             setPreview(undefined)
             return
