@@ -138,7 +138,7 @@ function FMenu() {
                     <div className="VendorAddModal-content">
                         <VendorAddItem/>
                         <Button className="profileClosebtn" style={{backgroundColor:'#584b95'}}
-                            onClick={()=> setModalAdd(!modalAdd)}>
+                            onClick={()=> {setModalAdd(!modalAdd); allItems(); }}>
                             <i class="fa-solid fa-xmark"></i>
                         </Button>
                     </div>
@@ -149,7 +149,7 @@ function FMenu() {
                     <div className="VendorAddModal-content">
                         <VendorUpdateItem rowDataForUpdate={rowDataForUpdate} />
                         <Button className="profileClosebtn" style={{backgroundColor:'#584b95'}}
-                            onClick={()=> setModalUpdate(!modalUpdate)}>
+                            onClick={()=> {setModalUpdate(!modalUpdate); allItems(); } }>
                             <i class="fa-solid fa-xmark"></i>
                         </Button>
                     </div>

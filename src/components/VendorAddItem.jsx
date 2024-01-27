@@ -65,7 +65,6 @@ function VendorAddItem() {
                     const url=await getDownloadURL(uploadTask.snapshot.ref);
                     const urlFinal = url.split("%2F");
                     setImageURL(urlFinal.pop());
-                    console.log(imageURL);   
                 }
                 catch(error){
                     console.log("error getting the url:", error);
@@ -77,8 +76,6 @@ function VendorAddItem() {
 
     const submitProduct=async(event)=>{
         const token = JSON.parse(localStorage.getItem('food-delivery-token'));
-        console.log(token);
-        console.log(product)
         const newProduct={
             name: product.name,
             description:product.description,
@@ -98,7 +95,6 @@ function VendorAddItem() {
         )
         
         window.alert("ADDED");
-        window.location.reload();
         } catch(error){
             console.log(error)
         }
@@ -143,7 +139,7 @@ function VendorAddItem() {
                         </div>
                     </div>
                 </div>
-                {console.log(product)}
+              
                     <Button onClick={submitProduct} style={{width:'100%', marginTop:'2rem',marginBottom:'1rem', backgroundColor:'#584b95'}}>PROCEED TO ADD</Button>
         </div>
     );
