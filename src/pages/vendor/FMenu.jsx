@@ -10,6 +10,7 @@ import axios from 'axios'
 
 import vendorMenu from '../TryData/vendorMenu';
 import VendorAddItem from '../../components/VendorAddItem';
+import VendorUpdateItem from '../../components/VendorUpdateItem';
 import { itemRoute } from '../../utils/APIroutes';
 
 
@@ -19,6 +20,9 @@ function FMenu() {
     const url = itemRoute.concat("/").concat(token.id)
     const [vendorMenuu, setVendorMenu] = React.useState([{}]);
     const [loading, setLoading] = React.useState(true);
+    const [modalAdd, setModalAdd]=useState(false);
+    const [modalUpdate, setModalUpdate]=useState(false);
+    const [rowDataForUpdate, setRowDataForUpdate] = useState(null);
 
     const allItems = async () => {
         try {
@@ -43,13 +47,19 @@ function FMenu() {
     // allItems();
 
     const handleDeleteRow = (rowData) => {
-        // Implement logic to delete the row from the state or API
-        window.alert(rowData.name+ "this is the code" + rowData.code);
+        const isConfirmed = window.confirm(`Are you sure you want to delete ${rowData.name}?`);
+
+        // If the user clicks 'OK' in the confirmation dialog, proceed with the deletion
+        if (isConfirmed) {
+          // Implement logic to delete the row from the state or API
+          window.alert(rowData.name + "this is the code" + rowData.code);
+        } 
       };
-      const handleEditRow = (rowData) => {
+    const handleEditRow = (rowData) => {
         // Implement logic to delete the row from the state or API
-        window.alert("Edited");
-      };
+        setRowDataForUpdate(rowData);
+        setModalUpdate(!modalUpdate);
+    };
     
 
     // displaying image and price in the table
@@ -112,8 +122,6 @@ function FMenu() {
         );
     };
 
-    const [modal, setModal]=useState(false);
-
     useEffect(() => {
         allItems();
     }, []);
@@ -124,13 +132,24 @@ function FMenu() {
         <div className='menudiv'>
             <h1>Menu</h1>
             <hr/>
-            <Button onClick={()=> setModal(!modal)}>ADD AN ITEM</Button>
-            { modal && <div className="profileModal">
+            <Button onClick={()=> setModalAdd(!modalAdd)}>ADD AN ITEM</Button>
+            { modalAdd && <div className="profileModal">
                 <div className="profileOverlay" >
                     <div className="VendorAddModal-content">
                         <VendorAddItem/>
                         <Button className="profileClosebtn" style={{backgroundColor:'#584b95'}}
-                            onClick={()=> setModal(!modal)}>
+                            onClick={()=> setModalAdd(!modalAdd)}>
+                            <i class="fa-solid fa-xmark"></i>
+                        </Button>
+                    </div>
+                </div>
+            </div>}
+            { modalUpdate && <div className="profileModal">
+                <div className="profileOverlay" >
+                    <div className="VendorAddModal-content">
+                        <VendorUpdateItem rowDataForUpdate={rowDataForUpdate} />
+                        <Button className="profileClosebtn" style={{backgroundColor:'#584b95'}}
+                            onClick={()=> setModalUpdate(!modalUpdate)}>
                             <i class="fa-solid fa-xmark"></i>
                         </Button>
                     </div>
