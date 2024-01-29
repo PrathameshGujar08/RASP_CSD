@@ -6,6 +6,7 @@ import {ref,uploadBytesResumable,getDownloadURL} from "firebase/storage";
 import axios from 'axios'
 import storage from "../services/firebase";
 import { itemRoute } from "../utils/APIroutes";
+import { jwtDecode } from 'jwt-decode'
 
 
 // add item button funcationality in vendor menu page
@@ -79,33 +80,32 @@ function VendorUpdateItem({ rowDataForUpdate }) {
     };
 
     const submitProduct=async(event)=>{
-        console.log(product);
-        console.log("YAYAYA" + PreviousItemName);
-        console.log(imageURL);
-        // const token = JSON.parse(localStorage.getItem('food-delivery-token'));
-        // const newProduct={
-        //     name: product.name,
-        //     description:product.description,
-        //     price: product.price,
-        //     category:product.category,
-        //     stock : product.stock,
-        //     img:imageURL
-        // }
-        // const config = {
-        //     headers: {
-        //         "Content-Type":'application/x-www-form-urlencoded'
-        //     }
-        // }
-        // try{
-        // const response = await axios.post(
-        //     itemRoute, {"token": token, "product":newProduct}
-        // )
+        // console.log(product);
+        // console.log("YAYAYA" + PreviousItemName);
+        // console.log(imageURL);
+        const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+        const newProduct={
+            name: product.name,
+            description:product.description,
+            price: product.price,
+            category:product.category,
+            stock : product.stock,
+            img:imageURL
+        }
+        const config = {
+            headers: {
+                "Content-Type":'application/x-www-form-urlencoded'
+            }
+        }
+        try{
+            const url = itemRoute.concat("/").concat(token.id)
+            const res = await axios.put(url+"/"+PreviousItemName, {"token": JSON.parse(localStorage.getItem('food-delivery-token')), "product":newProduct})
         
-        // window.alert("ADDED");
-        // window.location.reload();
-        // } catch(error){
-        //     console.log(error)
-        // }
+        window.alert("EDITED");
+        
+        } catch(error){
+            console.log(error)
+        }
     };
     useEffect(() => {
         if (selectedFile) {
@@ -125,7 +125,7 @@ function VendorUpdateItem({ rowDataForUpdate }) {
                     <div style={{width:'50%'}}>
                         <input className="cartInput" type="text"  placeholder="Item Name" name="name" onChange={handleChange} value={product.name} required/> 
                         <input className="cartInput" type="text"  placeholder="Category" name="category" onChange={handleChange} value={product.category} required/> 
-                        <input className="cartInput" type="text"  placeholder="description" name="description" onChange={handleChange} value={product.description} /> 
+                        <input className="cartInput" type="text"  placeholder="DSescription" name="description" onChange={handleChange} value={product.description} /> 
                         <div style={{display:'flex', gap:'2rem'}}>
                             <input className="cartInput" type="number"  placeholder="Price" name="price" onChange={handleChange} value={product.price}  required/> 
                             <Form.Select className="cartInput" name="stock" placeholder="Availability" onChange={handleChange} value={product.stock} required>
@@ -140,7 +140,7 @@ function VendorUpdateItem({ rowDataForUpdate }) {
                         
                         <div style={{display:'flex', gap :"1rem", padding: '10px'}}>
                             <Button onClick={handleUpload} size="sm"> Upload image</Button> 
-                            <p>{percent} "% done"</p>
+                            <p>{percent} % done</p>
                         </div>
                     </div>
                 </div>

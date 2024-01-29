@@ -46,19 +46,21 @@ function FMenu() {
     }
     // allItems();
 
-    const handleDeleteRow = (rowData) => {
+    const handleDeleteRow = async (rowData) => {
         const isConfirmed = window.confirm(`Are you sure you want to delete ${rowData.name}?`);
 
         // If the user clicks 'OK' in the confirmation dialog, proceed with the deletion
         if (isConfirmed) {
           // Implement logic to delete the row from the state or API
-          window.alert(rowData.name + "this is the code" + rowData.code);
+          const res = await axios.delete(url+"/"+rowData.name)
+          allItems();
         } 
       };
-    const handleEditRow = (rowData) => {
+    const handleEditRow = async (rowData) => {
         // Implement logic to delete the row from the state or API
         setRowDataForUpdate(rowData);
         setModalUpdate(!modalUpdate);
+        allItems();
     };
     
 

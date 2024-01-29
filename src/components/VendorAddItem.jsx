@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, Profiler} from "react";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
@@ -86,7 +86,8 @@ function VendorAddItem() {
         }
         const config = {
             headers: {
-                "Content-Type":'application/x-www-form-urlencoded'
+                "Content-Type":'application/x-www-form-urlencoded',
+                "Authorization": 'Bearer '+token
             }
         }
         try{
@@ -96,8 +97,15 @@ function VendorAddItem() {
         
         window.alert("ADDED");
         } catch(error){
-            console.log(error)
+            window.alert("Could not add item.")
         }
+
+        setProduct({
+            name: "",
+            description:"",
+            price: Number,
+            category:""
+        });
     };
     useEffect(() => {
         if (!selectedFile) {
@@ -120,7 +128,7 @@ function VendorAddItem() {
                     <div style={{width:'50%'}}>
                         <input className="cartInput" type="text"  placeholder="Item Name" name="name" onChange={handleChange} value={product.name} required/> 
                         <input className="cartInput" type="text"  placeholder="Category" name="category" onChange={handleChange} value={product.category} required/> 
-                        <input className="cartInput" type="text"  placeholder="description" name="description" onChange={handleChange} value={product.description} /> 
+                        <input className="cartInput" type="text"  placeholder="Description" name="description" onChange={handleChange} value={product.description} /> 
                         <div style={{display:'flex', gap:'2rem'}}>
                             <input className="cartInput" type="number"  placeholder="Price" name="price" onChange={handleChange} value={product.price}  required/> 
                             <Form.Select className="cartInput" name="stock" placeholder="Availability" onChange={handleChange} value={product.stock} required>
@@ -135,7 +143,7 @@ function VendorAddItem() {
                         
                         <div style={{display:'flex', gap :"1rem", padding: '10px'}}>
                             <Button onClick={handleUpload} size="sm"> Upload image</Button> 
-                            <p>{percent} "% done"</p>
+                            <p>{percent} % done</p>
                         </div>
                     </div>
                 </div>
