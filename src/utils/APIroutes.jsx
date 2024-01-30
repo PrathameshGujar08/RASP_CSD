@@ -6,4 +6,5 @@ export const loginRoute = `${host}/api/auth/login`
 
 export const otpverficationRoute = `${host}/api/auth/verifyotp`
 export const itemRoute = "http://localhost:3500/api/menu/items"
+export const restaurantRoute="http://localhost:5432/api/vendor/restaurants"
 

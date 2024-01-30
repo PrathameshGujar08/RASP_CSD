@@ -15,9 +15,8 @@ function App() {
         <Route path="/Login" element={<Login />}/>
         <Route path="/" element={<Home/>}></Route>
         <Route path="/cart" element={<Cart/>}></Route>
-        <Route path="/restaurant" element={<Restaurant/>}></Route>
+        <Route path="/restaurant/:resId" element={<Restaurant/>}></Route>
         <Route path="/profile_endpoint" element={<Profile />}></Route>
-         {/*vendor pages  */}
          <Route path="/vendor" element={<Vendor />}></Route>
          <Route path="/verifyotp" element={<OtpVerification />}></Route>
       </Routes>

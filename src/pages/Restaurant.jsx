@@ -1,28 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+import { useNavigate,useParams } from 'react-router-dom';
+import axios from "axios";
 
 import Categories from '../components/Categories';
-import items from './TryData/data';
+// import items from './TryData/data';
 import Header from "../components/Header";
 import { RFoodItem } from "../components/Cards";
-const allCategories = ['all', ...new Set(items.map(item => item.category))];
+import { itemRoute } from '../utils/APIroutes';
+
+
 function Restaurant() {
-    const [menuItems, setMenuItems] = useState(items);
-    const [categories, setCategories] = useState(allCategories);
+    const navigate = useNavigate();
+    const param = useParams();
+    const productId = param.resId;
+    const url = itemRoute.concat("/").concat(productId);
+
+    const [productData, setProductData] = useState([{}]);
+    const [loading, setLoading] = React.useState(true);
+
+    const [menuItems, setMenuItems] = useState([{}]);
+    const [categories, setCategories] = useState([]);
+
+    const allItems = async () => {
+        try {
+            const res = await axios.get(url, {crossDomain: true});
+            const items = res.data;
+            setProductData(items);
+            const allCategories = ['all', ...new Set(items.map(item => item.category))];
+            setCategories(allCategories); 
+            setMenuItems(items);
+            setLoading(false);
+            if (!res.status === 200) {
+                throw new Error(res.error);
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+   
 
     const filterItems = category => {
         console.log('click', category);
         if(category =='all'){
-        setMenuItems(items);
+        setMenuItems(productData);
         return;
         }
-        const newItems = items.filter((item) => item.category === category);
+        const newItems = productData.filter((item) => item.category === category);
         setMenuItems(newItems);
     };
     function create_menu(items){
         return(
-            <RFoodItem id={items.id} title={items.title} img={items.img} desc={items.desc} price={items.price} key={items.id} />
+            <RFoodItem id={items.id} title={items.name} img={items.img} desc={items.description} price={items.price} key={items._id} />
         );
     };
+    useEffect(() => {
+        allItems();
+    }, []);
+    if (loading) {
+        return <div>Loading...</div>;
+    }
     return (
         <div>
             <Header/>

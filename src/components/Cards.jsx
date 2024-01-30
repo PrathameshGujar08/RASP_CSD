@@ -9,7 +9,7 @@ function RName(props) {
     return (
         <div class="col-lg-3 hmcard">
             <div class="hm_card">
-            {<Link to={`/restuarant/${props.id}`}><img className="hmcard_img" src={process.env.PUBLIC_URL + props.image} alt="Avatar" /></Link>}
+            {<Link to={`/restaurant/${props.id}`}><img className="hmcard_img" src={props.image} alt="Avatar" /></Link>}
                 <div class="hm_cardcontainer">
                     <h5><b>{props.name}</b></h5>
                     {/* description */}
