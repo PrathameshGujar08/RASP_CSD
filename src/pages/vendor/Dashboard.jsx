@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import {ref,uploadBytesResumable,getDownloadURL} from "firebase/storage";
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
+import { vendorRoute } from "../../utils/APIroutes";
 
 import storage from '../../services/firebase';
 
@@ -10,6 +11,7 @@ function Dashboard() {
     const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
 
     const [modal, setModal]=useState(false);
+    const [percent, setPercent] = React.useState(0);
     const [selectedFile, setSelectedFile] = React.useState()
     const [imageURL, setImageURL] = React.useState()
     const [preview, setPreview] = React.useState()
@@ -27,18 +29,43 @@ function Dashboard() {
             alert("Please upload an image first!");
         }
         else{
-        const storageRef = ref(storage, `/files/${selectedFile.name}`);
+        const storageRef = ref(storage, `/restaurants/${token.id}`);
         const uploadTask = uploadBytesResumable(storageRef, selectedFile);
-        // getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-        //     setImageURL(url);
-        // });
-        
-
+ 
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const percent = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+ 
+                // update progress
+                setPercent(percent);
+            },
+            (err) => console.log(err),
+            async () => {
+                try{
+                    const url=await getDownloadURL(uploadTask.snapshot.ref);
+                    const urlFinal = url.split("%2F");
+                    setImageURL(urlFinal.pop());
+                }
+                catch(error){
+                    console.log("error getting the url:", error);
+                }
+            }
+        );
         }
     };
     const submitProduct=async(event)=>{
         // write code to update imageUrl to the backend vendor profile picture
-        window.location.reload();
+        const token = JSON.parse(localStorage.getItem('food-delivery-token'));
+        const decodedToken = jwtDecode(token)
+        const url = vendorRoute+"/imageUpdate/"+decodedToken.id
+        const res = await axios.patch(url, {token: token, image: imageURL})
+        window.alert("Edited")
+        
+        
+        // window.location.reload();
     }
     useEffect(() => {
         if (!selectedFile) {
