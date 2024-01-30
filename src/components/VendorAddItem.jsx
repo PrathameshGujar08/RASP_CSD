@@ -6,6 +6,7 @@ import {ref,uploadBytesResumable,getDownloadURL} from "firebase/storage";
 import axios from 'axios'
 import storage from "../services/firebase";
 import { itemRoute } from "../utils/APIroutes";
+import { jwtDecode } from 'jwt-decode'
 
 
 // add item button funcationality in vendor menu page
@@ -46,7 +47,9 @@ function VendorAddItem() {
             alert("Please upload an image first!");
         }
         else{
-        const storageRef = ref(storage, `/files/${selectedFile.name}`);
+        const decodedToken = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+        const fileName = decodedToken.id+"_"+product.name
+        const storageRef = ref(storage, `/files/${fileName}`);
         const uploadTask = uploadBytesResumable(storageRef, selectedFile);
  
         uploadTask.on(
