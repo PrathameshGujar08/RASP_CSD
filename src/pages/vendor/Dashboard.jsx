@@ -1,18 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import {ref,uploadBytesResumable,getDownloadURL} from "firebase/storage";
+import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
 
 import storage from '../../services/firebase';
 
 function Dashboard() {
-    const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+    const navigate = useNavigate();
+    const[token,setToken]=useState();
+    // const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
 
     const [modal, setModal]=useState(false);
     const [selectedFile, setSelectedFile] = React.useState()
     const [imageURL, setImageURL] = React.useState()
     const [preview, setPreview] = React.useState()
+    const[loading,SetLoading]=useState(true);
     
     const onSelectFile = e => { 
         if (!e.target.files || e.target.files.length === 0) { 
@@ -33,7 +37,6 @@ function Dashboard() {
         //     setImageURL(url);
         // });
         
-
         }
     };
     const submitProduct=async(event)=>{
@@ -41,6 +44,17 @@ function Dashboard() {
         window.location.reload();
     }
     useEffect(() => {
+        if(localStorage.getItem("food-delivery-token"))
+        {
+            const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+            setToken(token)
+            if(token.userRole != "vendor"){
+                navigate("/login");
+            }
+        }
+        else {navigate("/login");}
+        SetLoading(false);
+
         if (!selectedFile) {
             setPreview(undefined)
             return
@@ -49,7 +63,7 @@ function Dashboard() {
         setPreview(objectUrl)
         return () => URL.revokeObjectURL(objectUrl)
     }, [selectedFile])
-
+    if(loading) return ( <div> Loading</div> )
     return (
         <div>
             {/* restaurant provbile image and name part */}
