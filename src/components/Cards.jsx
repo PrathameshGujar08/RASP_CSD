@@ -26,7 +26,7 @@ function RFoodItem(props){
         <div className="Rcontainer">
             <div className="Rcard">
                 <div className="Rimage">
-                    <img src={process.env.PUBLIC_URL + props.img} alt="Product" />
+                    <img src={props.img} alt="Product" />
                 </div>
                 <div className="Rcontent">
                     <h3>{props.title}</h3>

@@ -92,7 +92,7 @@ const c_handleSubmit = async(event) => {
         ))
         setTimeout(() => {
           navigate("/verifyotp")
-        }, 1000);
+        }, 2000);
         
     } catch(error){
       toast.error(error, toastconf)

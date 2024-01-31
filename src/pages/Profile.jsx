@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect,useState} from "react";
 import {useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'
 import Header from "../components/Header";
@@ -7,6 +7,9 @@ import orderHistData from "./TryData/orderHistData";
 // user profile page
 function Profile() {
     const navigate = useNavigate();
+    const[token,setToken]=useState();
+    const[loading,SetLoading]=useState(true);
+
     function create_orderHist(items){
         return(
             <OrderHistItem id={items.id} img={items.img} restaurant={items.restaurant} status={items.status} orderNo={items.orderNo} total={items.total} foodItems={items.foodItems} time={items.time} key={items.id} />
@@ -17,11 +20,15 @@ function Profile() {
         if(localStorage.getItem("food-delivery-token"))
         {
             const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+            setToken(token)
             if(token.userRole != "user"){
-              navigate("/login");
+                navigate("/login");
             }
         }
+        else {navigate("/login");}
+        SetLoading(false);
     }, []);
+    if(loading) return ( <div> Loading</div> )
     return (
         <div >
             <Header/>

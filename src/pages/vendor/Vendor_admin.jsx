@@ -27,6 +27,7 @@ const Vendor= () => {
             navigate("/login");
           }
       }
+      else {navigate("/login");}
   }, []);
   return (
   <>

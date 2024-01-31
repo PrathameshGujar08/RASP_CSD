@@ -6,6 +6,9 @@ import {ref,uploadBytesResumable,getDownloadURL} from "firebase/storage";
 import axios from 'axios'
 import storage from "../services/firebase";
 import { itemRoute } from "../utils/APIroutes";
+import { jwtDecode } from 'jwt-decode'
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 
 // add item button funcationality in vendor menu page
@@ -43,10 +46,12 @@ function VendorAddItem() {
     const handleUpload = async(event) => {
         event.preventDefault();
         if (!selectedFile) {
-            alert("Please upload an image first!");
+            toast.error("Please upload an image first!");
         }
         else{
-        const storageRef = ref(storage, `/files/${selectedFile.name}`);
+        const decodedToken = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+        const fileName = decodedToken.id+"_"+product.name
+        const storageRef = ref(storage, `/files/${fileName}`);
         const uploadTask = uploadBytesResumable(storageRef, selectedFile);
  
         uploadTask.on(
@@ -95,9 +100,9 @@ function VendorAddItem() {
             itemRoute, {"token": token, "product":newProduct}
         )
         
-        window.alert("ADDED");
+        toast.success("ADDED");
         } catch(error){
-            window.alert("Could not add item.")
+            toast.error("Could not add item.")
         }
 
         setProduct({
@@ -149,6 +154,7 @@ function VendorAddItem() {
                 </div>
               
                     <Button onClick={submitProduct} style={{width:'100%', marginTop:'2rem',marginBottom:'1rem', backgroundColor:'#584b95'}}>PROCEED TO ADD</Button>
+                    <ToastContainer/>
         </div>
     );
 }

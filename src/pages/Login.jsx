@@ -74,7 +74,7 @@ const c_handleSubmit = async(event) => {
     toast.success("Login Succesful", toastconf);
     setTimeout(() => {
       navigate("/")
-    }, 3000);
+    }, 2000);
 } catch (error){
     // console.log("error catch hogyi", error)
     toast.error("User or Password does not match", toastconf);
@@ -98,7 +98,7 @@ const v_handleSubmit = async(event) => {
   toast.success("Login Succesful", toastconf);
   setTimeout(() => {
     navigate("/vendor")
-  }, 3000);
+  }, 2000);
 } catch (error){
     toast.error("User or Password does not match");
   }
