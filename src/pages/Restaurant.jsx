@@ -6,7 +6,7 @@ import Categories from '../components/Categories';
 // import items from './TryData/data';
 import Header from "../components/Header";
 import { RFoodItem } from "../components/Cards";
-import { itemRoute } from '../utils/APIroutes';
+import { itemRoute, vendorRoute } from '../utils/APIroutes';
 
 
 function Restaurant() {
@@ -14,12 +14,14 @@ function Restaurant() {
     const param = useParams();
     const productId = param.resId;
     const url = itemRoute.concat("/").concat(productId);
+    const vendorInfoUrl=vendorRoute.concat("/").concat(productId);
 
     const [productData, setProductData] = useState([{}]);
     const [loading, setLoading] = React.useState(true);
 
     const [menuItems, setMenuItems] = useState([{}]);
     const [categories, setCategories] = useState([]);
+    const[vendor,setVendor]=useState();
 
     const allItems = async () => {
         try {
@@ -30,6 +32,20 @@ function Restaurant() {
             setCategories(allCategories); 
             setMenuItems(items);
             setLoading(false);
+            if (!res.status === 200) {
+                throw new Error(res.error);
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    const vendorInfo = async () => {
+        try {
+            const res = await axios.get(vendorInfoUrl, {crossDomain: true});
+            const items = res.data;
+            setVendor(items[0]);
             if (!res.status === 200) {
                 throw new Error(res.error);
             }
@@ -55,6 +71,7 @@ function Restaurant() {
         );
     };
     useEffect(() => {
+        vendorInfo();
         allItems();
     }, []);
     if (loading) {
@@ -63,7 +80,7 @@ function Restaurant() {
     return (
         <div>
             <Header/>
-            <h1 id="resHead">Tech Cafe</h1>
+            <h1 id="resHead">{vendor.shopname}</h1>
             <div className='hr_food'> <hr className="horizontalLine"/></div>
             
             <div className="RmainCont">
