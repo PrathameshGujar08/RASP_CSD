@@ -1,6 +1,9 @@
-import React, {useState} from "react";
+import React, {useState,useContext} from "react";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import { CartContext } from "../context/cart";
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 import OrderDetails from "./OrderDetails";
 
@@ -21,6 +24,20 @@ function RName(props) {
 
 // food item card on the page of each restaurant
 function RFoodItem(props){
+    const { cartItems, addToCart ,clearCart} = useContext(CartContext);
+    const checkCart= ()=>{
+        const isInCart = cartItems.length > 0 && cartItems.some(item => item.resId !== props.resId);
+        if (isInCart) {
+            const isConfirmed = window.confirm("Items from another restaurant are already in the cart. Do you want to delete them?");
+            if (isConfirmed) {
+                clearCart();
+                toast.success("Cart has been cleared.")
+            }
+        } else {
+            addToCart(props);
+            toast.success(`${props.title} has been added to the cart`);
+        }
+    }
     return(
 
         <div className="Rcontainer">
@@ -32,22 +49,37 @@ function RFoodItem(props){
                     <h3>{props.title}</h3>
                     <p>&#8377; {props.price}</p>
                     <p>{props.desc}</p>
-                    <Button variant="outline-success" size="sm">Add</Button>
+                    {/* toast.success(`${props.title} has been added to the cart`); */}
+                    <Button variant="outline-success" size="sm"
+                        onClick={() => { checkCart(); console.log(cartItems);}}
+                    >Add
+                    </Button>
                 </div>
-            </div>      
+            </div>   
+            <ToastContainer/>   
         </div>
     )
 }
 
 // food items added in the cart page
 function CartItem(props){
+    const {addToCart, removeFromCart } = useContext(CartContext)
     return (
         <div style={{ display: 'flex', alignItems: 'center' , marginTop: '1.5rem'}}>
             <div style={{ width: '60%'}}>
                 {props.name}
             </div>
-            <div style={{ width: '20%'}}>
-                <input style={{width:"95%"}} type="number" placeholder="1"  name="quantity"/>
+            <div style={{ display:"flex", width: '20%', gap:"0.2rem", background:"white"}}>
+                {/* <input style={{width:"95%"}} type="number" placeholder="1"  name="quantity"/> */}
+                <Button variant="success" size="sm"
+                    onClick={()=>{addToCart(props)}}
+                >+
+                </Button>
+                <p>{props.quantity}</p>
+                <Button size="sm" variant="success"
+                     onClick={()=>{removeFromCart(props)}}
+                >-
+                </Button>
             </div>
             <div style={{ width: '20%', textAlign: 'center'}}>
                 &#8377; {props.price}

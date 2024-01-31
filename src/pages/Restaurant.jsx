@@ -2,6 +2,7 @@ import React, { useState ,useEffect} from 'react';
 import { useNavigate,useParams } from 'react-router-dom';
 import axios from "axios";
 
+
 import Categories from '../components/Categories';
 // import items from './TryData/data';
 import Header from "../components/Header";
@@ -29,7 +30,6 @@ function Restaurant() {
             const res = await axios.get(url, {crossDomain: true});
             const items = res.data;
             setProductData(items);
-            console.log(items);
             const allCategories = ['all', ...new Set(items.map(item => item.category))];
             setCategories(allCategories); 
             setMenuItems(items);
@@ -47,11 +47,7 @@ function Restaurant() {
         try {
             const res = await axios.get(vendorInfoUrl, {crossDomain: true});
             const items = res.data;
-            console.log("YAYAAYAYA")
-            console.log(items);
-            console.log("WOGOGOHO")
             setVendor(items[0]);
-            console.log(vendor);
             setVLoading(false);
             if (!res.status === 200) {
                 throw new Error(res.error);
@@ -74,7 +70,7 @@ function Restaurant() {
     };
     function create_menu(items){
         return(
-            <RFoodItem id={items.id} title={items.name} img={items.img} desc={items.description} price={items.price} key={items._id} />
+            <RFoodItem id={items.id} title={items.name} img={items.img} desc={items.description} price={items.price} resId={items.resId} key={items._id} />
         );
     };
     useEffect(() => {

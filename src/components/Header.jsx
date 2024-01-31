@@ -45,6 +45,7 @@ function Header() {
 
     // Function to Handle Logout Click
     let handle_Logout_Click = () => {
+        localStorage.removeItem("cartItems")
         localStorage.removeItem("food-delivery-token")
         navigate("/login")
     }
