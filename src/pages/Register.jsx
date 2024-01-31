@@ -5,6 +5,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import { registerRoute } from '../utils/APIroutes';
+
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
 function Register() {
 
   const navigate = useNavigate();
@@ -32,6 +36,8 @@ function Register() {
   })
 
   const [swapPanel, setSwapPanel] = useState(false);
+  const [type, setType] = useState('password');
+  const [icon, setIcon] = useState(eyeOff)
 
   useEffect(() => {
     if(localStorage.getItem("current-food-delivery-user")){
@@ -124,6 +130,16 @@ const v_handleSubmit = async(event) => {
     }     
 }
 
+  const handleToggle = () => {
+    if (type==='password'){
+      setIcon(eye);
+      setType('text')
+    } else {
+      setIcon(eyeOff)
+      setType('password')
+    }
+  }
+
   return (
     <div className="sigin">
       <div
@@ -160,12 +176,20 @@ const v_handleSubmit = async(event) => {
           name="shopname"  required
           onChange={(e) => v_handleChange(e)}
           />
-          <input 
-          type="password" 
-          placeholder="Password" 
-          name="password"  required
-          onChange={(e) => v_handleChange(e)}
-          />
+
+          <div >
+            <input 
+            type={type} 
+            style={{width:'15.5rem'}}
+            placeholder="Password" 
+            name="password"  required
+            onChange={(e) => v_handleChange(e)}
+            />
+            <span class="flex justify-around items-center" onClick={handleToggle}>
+                <Icon class="absolute mr-10" icon={icon} size={20}/>
+            </span>
+          </div>
+
           <input 
           type="password" 
           placeholder="Confirm Password" 

@@ -26,6 +26,7 @@ function Restaurant() {
             const res = await axios.get(url, {crossDomain: true});
             const items = res.data;
             setProductData(items);
+            console.log(items);
             const allCategories = ['all', ...new Set(items.map(item => item.category))];
             setCategories(allCategories); 
             setMenuItems(items);
