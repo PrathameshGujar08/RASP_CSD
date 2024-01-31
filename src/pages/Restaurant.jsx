@@ -17,7 +17,8 @@ function Restaurant() {
     const vendorInfoUrl=vendorRoute.concat("/").concat(productId);
 
     const [productData, setProductData] = useState([{}]);
-    const [loading, setLoading] = React.useState(true);
+    const [vloading, setVLoading] = React.useState(true);
+    const [iloading, setILoading] = React.useState(true);
 
     const [menuItems, setMenuItems] = useState([{}]);
     const [categories, setCategories] = useState([]);
@@ -32,7 +33,7 @@ function Restaurant() {
             const allCategories = ['all', ...new Set(items.map(item => item.category))];
             setCategories(allCategories); 
             setMenuItems(items);
-            setLoading(false);
+            setILoading(false);
             if (!res.status === 200) {
                 throw new Error(res.error);
             }
@@ -46,7 +47,12 @@ function Restaurant() {
         try {
             const res = await axios.get(vendorInfoUrl, {crossDomain: true});
             const items = res.data;
+            console.log("YAYAAYAYA")
+            console.log(items);
+            console.log("WOGOGOHO")
             setVendor(items[0]);
+            console.log(vendor);
+            setVLoading(false);
             if (!res.status === 200) {
                 throw new Error(res.error);
             }
@@ -75,7 +81,7 @@ function Restaurant() {
         vendorInfo();
         allItems();
     }, []);
-    if (loading) {
+    if (iloading || vloading) {
         return <div>Loading...</div>;
     }
     return (

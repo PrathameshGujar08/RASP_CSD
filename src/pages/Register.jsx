@@ -177,7 +177,7 @@ const v_handleSubmit = async(event) => {
           onChange={(e) => v_handleChange(e)}
           />
 
-          <div >
+          
             <input 
             type={type} 
             style={{width:'15.5rem'}}
@@ -185,10 +185,8 @@ const v_handleSubmit = async(event) => {
             name="password"  required
             onChange={(e) => v_handleChange(e)}
             />
-            <span class="flex justify-around items-center" onClick={handleToggle}>
-                <Icon class="absolute mr-10" icon={icon} size={20}/>
-            </span>
-          </div>
+            
+          
 
           <input 
           type="password" 
