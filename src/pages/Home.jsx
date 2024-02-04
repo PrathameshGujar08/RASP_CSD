@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import Header from '../components/Header';
 import HomeCategoryScroll from '../components/HomeCategoryScroll';
-import { RName } from '../components/Cards';
+import { RName , SearchRest} from '../components/Cards';
 import restName from './TryData/restName';
 import Footer from '../components/Footer';
 import { restaurantRoute } from '../utils/APIroutes';
@@ -16,8 +16,10 @@ function Home(){
     const [searchRestaurants, setSearchRestaurants] = React.useState([{}]);
     const [loading, setLoading] = React.useState(true);
     const[isSearchPage, setSearchPage] = useState(false);
+    const [searchQuery,setSearchQuery]=useState();
 
-    const getSearchItems = async(results) => {
+    const getSearchItems = async(results,query) => {
+        setSearchQuery(query);
         const { data } = await axios.post(searchUrl,{
             restaurants : results,
         })
@@ -25,6 +27,11 @@ function Home(){
         setSearchPage(true);
     }
 
+    function create_searchRest(items){
+        return(
+            <SearchRest id={items.id} image={items.img} name={items.shopname} sQuery="HELLO" key={items.id} />
+        );
+    };
     function create_restName(items){
         return(
             <RName id={items.id} image={items.img} name={items.shopname}  key={items.id} />
@@ -71,10 +78,10 @@ function Home(){
             <div className='contentm'>
             
                 <div className='hdiv2'>
-                    <h2>Food delivery in IIT Bhilai</h2>
+                    <h2>Restaurants that offer {searchQuery}</h2>
                     <div>
                         <div class="row">
-                            {searchRestaurants.map(create_restName)}
+                            {searchRestaurants.map(create_searchRest)}
                         </div> 
                         {/* {console.log("searchRestaurants")} */}
                     </div>               

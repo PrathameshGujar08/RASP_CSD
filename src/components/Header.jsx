@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 
 import { searchRoute } from "../utils/APIroutes";
 
-function Header({ getSearchItems }) {
+function Header({ getSearchItems}) {
     const searchUrl=searchRoute.concat("/getQuery");
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
@@ -50,9 +50,7 @@ function Header({ getSearchItems }) {
             if(data)
             {
                 setsLoading(false);
-                console.log("runs");
-                console.log(data);
-                getSearchItems(data);
+                getSearchItems(data,sQuery);
             }
             else{
                 console.log("error")

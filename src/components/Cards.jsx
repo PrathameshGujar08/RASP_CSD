@@ -21,6 +21,21 @@ function RName(props) {
         </div>
     );
 }
+// Search result Restaurant name card 
+function SearchRest(props) {
+    return (
+        <div class="col-lg-3 hmcard">
+            <div class="hm_card">
+            {<Link to={`/restaurant/${props.id}`}><img className="hmcard_img" src={props.image} alt="Avatar" /></Link>}
+                <div class="hm_cardcontainer">
+                    <h5><b>{props.name}</b></h5>
+                    <p>{props.sQuery}</p>
+                    {/* description */}
+                </div>
+             </div>  
+        </div>
+    );
+}
 
 // food item card on the page of each restaurant
 function RFoodItem(props){
@@ -145,4 +160,4 @@ function OrderHistItem(props) {
     );
 }
 
-export {RName, RFoodItem, CartItem, OrderHistItem};
+export {RName, RFoodItem, CartItem, OrderHistItem, SearchRest};
