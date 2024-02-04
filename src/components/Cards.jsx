@@ -71,7 +71,7 @@ function CartItem(props){
             </div>
             <div style={{ display:"flex", width: '20%', gap:"0.2rem", background:"white"}}>
                 {/* <input style={{width:"95%"}} type="number" placeholder="1"  name="quantity"/> */}
-                <Button variant="success" size="sm"
+                <Button variant="success" size="sm" 
                     onClick={()=>{addToCart(props)}}
                 >+
                 </Button>

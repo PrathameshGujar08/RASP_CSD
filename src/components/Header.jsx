@@ -1,40 +1,26 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { jwtDecode } from 'jwt-decode'
+import { toast } from "react-toastify";
 
-function Header() {
+import { searchRoute } from "../utils/APIroutes";
+
+function Header({ getSearchItems }) {
+    const searchUrl=searchRoute.concat("/getQuery");
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
     const[token, setToken]=React.useState();
-    const callAboutUser = async () => {
-        try {
-            // const res = await fetch(process.env.REACT_APP_BACKEND_URL+"api/users/aboutuser", {
-            //     method: "GET",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     credentials: "include",
-            // });
-            // const data = await res.json();
-            // console.log("header",data);
-            // setShow(true);
-
-            // if (!res.status === 200) {
-            //     throw new Error(res.error);
-            // }
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
+    const[sQuery, setsQuery] = useState('');
+    const[sloading,setsLoading]=useState(true);
     useEffect(() => {
         if(localStorage.getItem("food-delivery-token"))
         {
@@ -49,6 +35,34 @@ function Header() {
         localStorage.removeItem("food-delivery-token")
         navigate("/login")
     }
+
+    useEffect(()=>{
+        console.log(sQuery);
+    },[sQuery]);
+
+    const searchFunction = async (e) => {
+        try{
+            const { data } = await axios.post(searchUrl, 
+                {
+                    query : sQuery,
+                }
+            )
+            if(data)
+            {
+                setsLoading(false);
+                console.log("runs");
+                console.log(data);
+                getSearchItems(data);
+            }
+            else{
+                console.log("error")
+            }
+
+        } catch (err)
+        {
+            toast.error("Error", err);
+        }
+    }
     return (
         <div className="navbar-container">
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -62,9 +76,20 @@ function Header() {
                             <div className="input-group">
                                 <FormControl 
                                     type="search" placeholder="Search" className="me-2" aria-label="Search" style ={{width:400}}
+                                    onChange={(e) => {
+                                        setsQuery(e.target.value)
+                                    }}
+                                    onKeyDown={(e)=>{
+                                    if(e.keyCode === 13)
+                                    {
+                                        e.preventDefault();
+                                        searchFunction(e)}}
+                                    }
                                 />
                             </div>
-                            <Button variant="outline-light"><i class="fa-solid fa-magnifying-glass"></i></Button>
+                            <Button variant="outline-light" 
+                            onClick={(e)=>{searchFunction(e)}}
+                            ><i class="fa-solid fa-magnifying-glass"></i></Button>
                         </Form>
                         <Nav.Link className="navtext" href="/">Home</Nav.Link>
                         {show ? 

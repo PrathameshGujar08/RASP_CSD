@@ -1,10 +1,37 @@
 import React, {useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
-//<img className="menu-img-home" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
+import axios from 'axios';
 
-function HomeCategoryScroll(){
+import { searchRoute } from '../utils/APIroutes';
+
+function HomeCategoryScroll({ getSearchItems }){
+    const searchUrl=searchRoute.concat("/getQuery");
     const sliderRef = useRef(null);
     const scrollAmount = 200;
+
+    const searchFunction = async (sQuery) => {
+        try{
+            const { data } = await axios.post(searchUrl, 
+                {
+                    query : sQuery,
+                }
+            )
+            if(data)
+            {
+                console.log("runs");
+                console.log(data);
+                getSearchItems(data);
+            }
+            else{
+                console.log("error")
+            }
+
+        } catch (err)
+        {
+            // toast.error("Error", err);
+            console.log(err);
+        }
+    }
     return(
         <div className='hmenu-div'>
             <div className='hdiv2'><h2>What do you want to eat today?</h2></div>
@@ -21,7 +48,11 @@ function HomeCategoryScroll(){
                 </button>
                 {/* Image container */}
                 <div className="home-menu-images-container" ref={sliderRef}>
-                    <div style={{ textAlign: 'center' }}> 
+                    <div style={{ textAlign: 'center' }}
+                       onClick={(e)=>{
+                        searchFunction("Pizza");
+                       }} 
+                    > 
                         <img className="home-menu-image" alt="..." src={process.env.PUBLIC_URL + '/images/pizza.jpg'} />
                         <h5 style={{ marginTop: '5px' }} >Pizza</h5>
                     </div>
