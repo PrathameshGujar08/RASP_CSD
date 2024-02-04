@@ -72,7 +72,7 @@ function Home(){
             
                 <div className='hdiv2'>
                     <h2>Food delivery in IIT Bhilai</h2>
-                    <div className='hres_container'>
+                    <div>
                         <div class="row">
                             {searchRestaurants.map(create_restName)}
                         </div> 
@@ -87,7 +87,7 @@ function Home(){
                 <HomeCategoryScroll getSearchItems={getSearchItems}/>       
                 <div className='hdiv2'>
                     <h2>Food delivery in IIT Bhilai</h2>
-                    <div className='hres_container'>
+                    <div >
                         <div class="row">
                             {restaurants.map(create_restName)}
                         </div> 
