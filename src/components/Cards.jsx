@@ -19,12 +19,12 @@ function RName(props) {
             <img className="hmcard_img" src={props.image} alt="Avatar" />
                 <div class="hm_cardcontainer">
                     <h5><b>{props.name}</b></h5>
-                    {/* description */}
                 </div>
             </div>
              </div>  
     );
 }
+
 // Search result Restaurant name card 
 function SearchRest(props) {
     return (
@@ -44,6 +44,9 @@ function SearchRest(props) {
 // food item card on the page of each restaurant
 function RFoodItem(props){
     const { cartItems, addToCart ,clearCart} = useContext(CartContext);
+
+    const availability = props.availability;
+
     const checkCart= ()=>{
         const isInCart = cartItems.length > 0 && cartItems.some(item => item.resId !== props.resId);
         if (isInCart) {
@@ -62,17 +65,32 @@ function RFoodItem(props){
         <div className="Rcontainer">
             <div className="Rcard">
                 <div className="Rimage">
-                    <img src={props.img} alt="Product" />
+
+                {availability
+                ?
+                (<img src={props.img}  alt="Product" />)
+                :
+                (<img src={props.img} style={{
+                        filter:"grayscale(100%)",
+                    }} alt="Product" />)}
                 </div>
+
                 <div className="Rcontent">
                     <h3>{props.title}</h3>
                     <p>&#8377; {props.price}</p>
                     <p>{props.desc}</p>
                     {/* toast.success(`${props.title} has been added to the cart`); */}
-                    <Button variant="outline-success" size="sm"
-                        onClick={() => { checkCart(); console.log(cartItems);}}
-                    >Add
-                    </Button>
+                    {availability
+                    ?
+                    (<Button variant="outline-success" size="sm"
+                            onClick={() => { checkCart(); console.log(cartItems);}}
+                        >Add
+                        </Button>)
+                    :
+                    (<Button variant="outline-secondary" size="sm"
+                        style={{color : "grey"}}
+                        >Add
+                        </Button>)}
                 </div>
             </div>   
             <ToastContainer/>   

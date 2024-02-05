@@ -2,7 +2,6 @@ import React, { useState ,useEffect} from 'react';
 import { useNavigate,useParams } from 'react-router-dom';
 import axios from "axios";
 
-
 import Categories from '../components/Categories';
 // import items from './TryData/data';
 import Header from "../components/Header";
@@ -70,7 +69,7 @@ function Restaurant() {
     };
     function create_menu(items){
         return(
-            <RFoodItem id={items.id} title={items.name} img={items.img} desc={items.description} price={items.price} resId={items.resId} key={items._id} />
+            <RFoodItem id={items.id} title={items.name} img={items.img} desc={items.description} price={items.price} resId={items.resId} key={items._id} availability={items.availability}/>
         );
     };
     useEffect(() => {
