@@ -1,5 +1,5 @@
 import React, {useState,useContext} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { CartContext } from "../context/cart";
 import { ToastContainer, toast } from 'react-toastify'; 
@@ -9,16 +9,20 @@ import OrderDetails from "./OrderDetails";
 
 // Restaurant name card on the home page
 function RName(props) {
+    const navigate = useNavigate();
+    
     return (
         <div class="col-lg-3 hmcard">
-            <div class="hm_card">
-            {<Link to={`/restaurant/${props.id}`}><img className="hmcard_img" src={props.image} alt="Avatar" /></Link>}
+            <div class="hm_card" onClick={()=>{
+                navigate(`/restaurant/${props.id}`)
+            }}>
+            <img className="hmcard_img" src={props.image} alt="Avatar" />
                 <div class="hm_cardcontainer">
                     <h5><b>{props.name}</b></h5>
                     {/* description */}
                 </div>
+            </div>
              </div>  
-        </div>
     );
 }
 // Search result Restaurant name card 
