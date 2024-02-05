@@ -70,7 +70,7 @@ function Restaurant() {
     };
     function create_menu(items){
         return(
-            <RFoodItem id={items.id} title={items.name} img={items.img} desc={items.description} price={items.price} resId={items.resId} key={items._id} />
+            <RFoodItem id={items.id} title={items.name} img={items.img} desc={items.description} price={items.price} resId={items.resId} key={items._id}  />
         );
     };
     useEffect(() => {

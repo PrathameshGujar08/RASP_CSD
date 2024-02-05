@@ -11,14 +11,13 @@ import OrderDetails from "./OrderDetails";
 function RName(props) {
     return (
         <div class="col-lg-3 hmcard">
-            {<Link to={`/restaurant/${props.id}`}><div class="hm_card">
-            <img className="hmcard_img" src={props.image} alt="Avatar" />
+            <div class="hm_card">
+            {<Link to={`/restaurant/${props.id}`}><img className="hmcard_img" src={props.image} alt="Avatar" /></Link>}
                 <div class="hm_cardcontainer">
                     <h5><b>{props.name}</b></h5>
                     {/* description */}
                 </div>
              </div>  
-             </Link>}
         </div>
     );
 }
