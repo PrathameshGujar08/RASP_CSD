@@ -65,7 +65,7 @@ function Search() {
             <div className='contentm'>
             
                 <div className='hdiv2'>
-                    <h2>Restaurants that offer {sQuery}</h2>
+                    <h2>Showing results for {sQuery}</h2>
                     <div>
                         <div class="row">
                             {searchRestaurants.map(create_searchRest)}
