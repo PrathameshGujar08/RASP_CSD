@@ -4,23 +4,23 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import axios from 'axios';
+// import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { jwtDecode } from 'jwt-decode'
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
-import { searchRoute } from "../utils/APIroutes";
+// import { searchRoute } from "../utils/APIroutes";
 
 function Header({ getSearchItems}) {
-    const searchUrl=searchRoute.concat("/getQuery");
+    // const searchUrl=searchRoute.concat("/getQuery");
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
     const[token, setToken]=React.useState();
     const[sQuery, setsQuery] = useState('');
-    const[sloading,setsLoading]=useState(true);
+    // const[sloading,setsLoading]=useState(true);
     useEffect(() => {
         if(localStorage.getItem("food-delivery-token"))
         {
@@ -41,25 +41,26 @@ function Header({ getSearchItems}) {
     },[sQuery]);
 
     const searchFunction = async (e) => {
-        try{
-            const { data } = await axios.post(searchUrl, 
-                {
-                    query : sQuery,
-                }
-            )
-            if(data)
-            {
-                setsLoading(false);
-                getSearchItems(data,sQuery);
-            }
-            else{
-                console.log("error")
-            }
+        navigate(`/search/${sQuery}`);
+        // try{
+        //     const { data } = await axios.post(searchUrl, 
+        //         {
+        //             query : sQuery,
+        //         }
+        //     )
+        //     if(data)
+        //     {
+        //         setsLoading(false);
+        //         getSearchItems(data,sQuery);
+        //     }
+        //     else{
+        //         console.log("error")
+        //     }
 
-        } catch (err)
-        {
-            toast.error("Error", err);
-        }
+        // } catch (err)
+        // {
+        //     toast.error("Error", err);
+        // }
     }
     return (
         <div className="navbar-container">

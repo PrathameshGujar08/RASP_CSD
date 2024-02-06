@@ -1,35 +1,37 @@
 import React, {useState, useRef } from 'react'
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link , useNavigate} from 'react-router-dom';
+// import axios from 'axios';
 
-import { searchRoute } from '../utils/APIroutes';
+// import { searchRoute } from '../utils/APIroutes';
 import homeCategory from '../pages/TryData/HomeCategory';
 
 function HomeCategoryScroll({ getSearchItems }){
-    const searchUrl=searchRoute.concat("/getQuery");
+    const navigate = useNavigate();
+    // const searchUrl=searchRoute.concat("/getQuery");
     const sliderRef = useRef(null);
     const scrollAmount = 200;
 
     const searchFunction = async (sQuery) => {
-        try{
-            const { data } = await axios.post(searchUrl, 
-                {
-                    query : sQuery,
-                }
-            )
-            if(data)
-            {
-                getSearchItems(data);
-            }
-            else{
-                console.log("error")
-            }
+        navigate(`/search/${sQuery}`);
+        // try{
+        //     const { data } = await axios.post(searchUrl, 
+        //         {
+        //             query : sQuery,
+        //         }
+        //     )
+        //     if(data)
+        //     {
+        //         getSearchItems(data);
+        //     }
+        //     else{
+        //         console.log("error")
+        //     }
 
-        } catch (err)
-        {
-            // toast.error("Error", err);
-            console.log(err);
-        }
+        // } catch (err)
+        // {
+        //     // toast.error("Error", err);
+        //     console.log(err);
+        // }
     }
     return(
         <div className='hmenu-div'>
