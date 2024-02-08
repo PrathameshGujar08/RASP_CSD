@@ -164,7 +164,7 @@ function FMenu() {
                 <DataTable value={vendorMenuu} 
                     paginator rows={10} rowsPerPageOptions={[10, 25, 50]} 
                     stripedRows
-                    tableStyle={{ minWidth: '60rem' }}
+                    
                     dataKey="id" filters={filters} filterDisplay="row" 
                     globalFilterFields={['name', 'category', 'stock']} emptyMessage="No items found.">
 

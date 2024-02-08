@@ -877,7 +877,6 @@
 
   /*vendor  dashboard page */
   .dashboard_topDiv{
-    display: flex;
     height: 12rem;
     background-color: #fafafa;
     border-radius: 16px;

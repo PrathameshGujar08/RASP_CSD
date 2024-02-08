@@ -8,6 +8,7 @@ import Vendor from './pages/vendor/Vendor_admin'
 import { Profile } from './pages/Profile';
 import OtpVerification from './pages/OtpVerification';
 import Search from './pages/Search';
+import Admin from './pages/Admin/AdminHome';
 function App() {
   return (
     <BrowserRouter>
@@ -19,8 +20,10 @@ function App() {
         <Route path="/restaurant/:resId" element={<Restaurant/>}></Route>
         <Route path="/search/:sQuery" element={<Search/>}></Route>
         <Route path="/profile_endpoint" element={<Profile />}></Route>
-         <Route path="/vendor" element={<Vendor />}></Route>
-         <Route path="/verifyotp" element={<OtpVerification />}></Route>
+        <Route path="/vendor" element={<Vendor />}></Route>
+        <Route path="/verifyotp" element={<OtpVerification />}></Route>
+        <Route path="/admin" element={<Admin/>}></Route>
+
       </Routes>
     </BrowserRouter>
   );

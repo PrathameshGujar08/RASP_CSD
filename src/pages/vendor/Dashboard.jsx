@@ -123,9 +123,8 @@ function Dashboard() {
     if(loading) return ( <div> Loading</div> )
     return (
         <div>
-            {console.log(vendor)}
             {/* restaurant provbile image and name part */}
-            <div className="dashboard_topDiv">
+            <div className="dashboard_topDiv" style={{display: 'flex'}}>
                 <div style={{display:'flex', gap:'1.5rem', alignItems:'flex-end', width:'100%'}}>
                     <img  src={vendor.img} alt="Product" />   {/* write src address from backend */}
                     <h1> {token.userID}</h1>                         {/* write restaurant name from backend */}

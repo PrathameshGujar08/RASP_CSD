@@ -3,39 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Vendor_Header() {
     const navigate = useNavigate();
-    const[show, setShow]=React.useState(false);
-    const callAboutUser = async () => {
-        try {
-            // const res = await fetch(process.env.REACT_APP_BACKEND_URL+"api/users/aboutuser", {
-            //     method: "GET",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     credentials: "include",
-            // });
-            // const data = await res.json();
-            // console.log("header",data);
-            // setShow(true);
-
-            // if (!res.status === 200) {
-            //     throw new Error(res.error);
-            // }
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
-    useEffect(() => {
-        if(localStorage.getItem("food-delivery-token"))
-        {
-            setShow(true);
-        }
-    }, []);
 
     // Function to Handle Logout Click
     let handle_Logout_Click = () => {
