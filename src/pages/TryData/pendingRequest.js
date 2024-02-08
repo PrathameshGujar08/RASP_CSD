@@ -1,8 +1,8 @@
 const requests=[
     {
         id:1,
-        name:"prathamesh gujar",
-        shopname:"gujjar halwai",
+        name:"Prathamesh Gujar",
+        shopname:"Gujjar Halwai",
         phone:"9783346866"
     },
     {
@@ -25,8 +25,8 @@ const requests=[
     }
     ,{
         id:5,
-        name:"prathamesh gujar",
-        shopname:"gujjar halwai",
+        name:"Prathamesh Gujar",
+        shopname:"Gujjar Halwai",
         phone:"9783346866"
     }
 ];
