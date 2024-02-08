@@ -9,6 +9,8 @@ import { Profile } from './pages/Profile';
 import OtpVerification from './pages/OtpVerification';
 import Search from './pages/Search';
 import Admin from './pages/Admin/AdminHome';
+import AdminLogin from './pages/Admin/Login';
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +25,7 @@ function App() {
         <Route path="/vendor" element={<Vendor />}></Route>
         <Route path="/verifyotp" element={<OtpVerification />}></Route>
         <Route path="/admin" element={<Admin/>}></Route>
+        <Route path="/adminlogin" element={<AdminLogin/>}></Route>
 
       </Routes>
     </BrowserRouter>
