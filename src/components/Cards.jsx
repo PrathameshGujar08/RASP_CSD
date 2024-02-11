@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { CartContext } from "../context/cart";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import { jwtDecode } from 'jwt-decode'
 
 import OrderDetails from "./OrderDetails";
 
@@ -51,17 +52,33 @@ function RFoodItem(props){
     const availability = props.availability;
 
     const checkCart= ()=>{
-        const isInCart = cartItems.length > 0 && cartItems.some(item => item.resId !== props.resId);
-        if (isInCart) {
-            const isConfirmed = window.confirm("Items from another restaurant are already in the cart. Do you want to delete them?");
-            if (isConfirmed) {
-                clearCart();
-                toast.success("Cart has been cleared.")
+        // check if the user is logged in as customer or not
+        if(localStorage.getItem("food-delivery-token"))
+        {
+            const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+            if(token.userRole == "user"){
+
+                 // check if items from another restaurant are already in the cart
+                const isInCart = cartItems.length > 0 && cartItems.some(item => item.resId !== props.resId);
+                if (isInCart) {
+                    const isConfirmed = window.confirm("Items from another restaurant are already in the cart. Do you want to delete them?");
+                    if (isConfirmed) {
+                        clearCart();
+                        toast.success("Cart has been cleared.")
+                    }
+                } else {
+                    addToCart(props);
+                    toast.success(`${props.title} has been added to the cart`);
+                } 
             }
-        } else {
-            addToCart(props);
-            toast.success(`${props.title} has been added to the cart`);
+            else{
+                toast.error("Please login as a customer to add items to the cart");
+            }
         }
+        else{
+            toast.error("Please login as a customer to add items to the cart");
+        }
+        
     }
     return(
 
@@ -86,7 +103,7 @@ function RFoodItem(props){
                     {availability
                     ?
                     (<Button variant="outline-success" size="sm"
-                            onClick={() => { checkCart(); console.log(cartItems);}}
+                            onClick={() => { checkCart();}}
                         >Add
                         </Button>)
                     :

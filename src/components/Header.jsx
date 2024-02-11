@@ -93,7 +93,7 @@ function Header({ getSearchItems}) {
                         <Nav.Link className="navtext" href="/">Home</Nav.Link>
                         {show ? 
                             <>
-                                <NavDropdown title={token.userID} id="nav-dropdown">
+                                <NavDropdown title={(token.userRole=="admin")? `ADMIN` : token.userID} id="nav-dropdown">
                                     <NavDropdown.Item href="/profile_endpoint">Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="/cart">Cart</NavDropdown.Item>
                                     <NavDropdown.Item onClick={handle_Logout_Click}>Logout</NavDropdown.Item>

@@ -11,6 +11,7 @@ import { unverifiedRoute } from "../../utils/APIroutes";
 const Dashboard=()=>{
     const[request,setRequest]=useState([{}]);
     const [loading, setLoading] = React.useState(true);
+    const [token,setToken]=useState();
     const allRequests = async () => {
         try {
             const res = await axios.get(unverifiedRoute, {crossDomain: true});
@@ -73,15 +74,15 @@ const Dashboard=()=>{
         <div> Loading</div>
         :
         <div>
-            <div className="dashboard_topDiv"  style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
+            {/* <div className="dashboard_topDiv"  style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}> */}
                
-                    <h1>ADMIN</h1>
-                    <div style={{alignSelf:'flex-start'}}>
+                    <h1 className="menuDiv">ADMIN</h1>
+                    {/* <div style={{alignSelf:'flex-start'}}>
                     <h4 style={{margin: '0'}}>Riyanshi Goyal</h4>
                     <p>riyanshigoyal@iitbhilai.ac.in</p>
-                    </div>
-            </div>
-            <div className="menuDiv" style={{marginTop:'1.5rem'}}>
+                    </div> */}
+            {/* </div> */}
+            <div className="menuDiv" >
                 <h2>Pending Requests</h2>
                 <DataTable value={request} 
                     paginator rows={10} rowsPerPageOptions={[10, 25, 50]} 
