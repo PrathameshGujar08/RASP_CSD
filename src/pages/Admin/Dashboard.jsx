@@ -4,6 +4,8 @@ import { Column } from 'primereact/column';
 import Button from 'react-bootstrap/Button';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { profileHost } from "../../utils/APIroutes";
 
@@ -39,7 +41,7 @@ const Dashboard=()=>{
         if (isConfirmed) {
           try{
           const response = await axios.patch(profileHost+"/api/admin/"+rowData._id, {crossDomain: true})
-          alert("Approved.");
+          toast.success("Approved.");
           allRequests()
         }
         catch(err){
@@ -53,7 +55,7 @@ const Dashboard=()=>{
         try{
           const response = await axios.delete(profileHost+"/api/admin/"+rowData._id, {crossDomain: true})
           console.log(response)
-          alert("Declined.");
+          toast.success("Declined.");
           allRequests()
         }
         catch (err){
@@ -100,6 +102,9 @@ const Dashboard=()=>{
             {/* </div> */}
             <div className="menuDiv" >
                 <h2>Pending Requests</h2>
+                <br/>
+                {(request)?
+                <>
                 <DataTable value={request} 
                     paginator rows={10} rowsPerPageOptions={[10, 25, 50]} 
                     stripedRows
@@ -112,6 +117,11 @@ const Dashboard=()=>{
                     <Column field ="phone" header="Phone No." ></Column>
                     <Column body={buttonTemplate}></Column>
                 </DataTable>
+                <ToastContainer/>
+                </>
+                :
+                <><div> You do not have any pending requests currently</div></>
+                }
             </div>
         </div>
         }
