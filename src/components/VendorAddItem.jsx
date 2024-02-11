@@ -97,7 +97,7 @@ function VendorAddItem() {
         }
         try{
         const response = await axios.post(
-            itemRoute, {"token": token, "product":newProduct}
+            itemRoute, {"token": token, "product":newProduct}, config
         )
         
         toast.success("ADDED");

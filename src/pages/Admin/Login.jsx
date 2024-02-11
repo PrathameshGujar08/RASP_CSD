@@ -39,27 +39,25 @@ function AdminLogin() {
   }
 
 const handleSubmit = async(event) => {
-
     event.preventDefault();
   
     const {email, password} = values;
-    alert("hello");
-    // try{
-    //     const response = await axios.post( loginRoute , {
-    //     "email":email,
-    //     "password":password,
-    //     "role":"admin"
-    //     })
-    //     localStorage.removeItem('food-delivery-phone')
-    //     localStorage.setItem('food-delivery-email', JSON.stringify(response.data.ID));
-    //     localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
-    //     toast.success("Login Succesful", toastconf);
-    //     setTimeout(() => {
-    //     navigate("/admin")
-    //     }, 2000);
-    // } catch (error){
-    //     toast.error("User or Password does not match", toastconf);
-    // }
+    try{
+        const response = await axios.post( loginRoute , {
+        "email":email,
+        "password":password,
+        "role":"admin"
+        })
+        localStorage.removeItem('food-delivery-phone')
+        localStorage.setItem('food-delivery-email', JSON.stringify(response.data.ID));
+        localStorage.setItem('food-delivery-token', JSON.stringify(response.data.token));
+        toast.success("Login Succesful", toastconf);
+        setTimeout(() => {
+        navigate("/admin")
+        }, 2000);
+    } catch (error){
+        toast.error("User or Password does not match", toastconf);
+    }
 }
 
   return (
