@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import axios from "axios";
+import { profileHost } from "../../utils/APIroutes";
 
 import { unverifiedRoute } from "../../utils/APIroutes";
 
@@ -35,13 +36,28 @@ const Dashboard=()=>{
     const handleApproveRow = async (rowData) => {
         const isConfirmed = window.confirm(`Are you sure you want to Approve ${rowData.shopname}?`);
         if (isConfirmed) {
-          alert("approved");
+          try{
+          const response = await axios.patch(profileHost+"/api/admin/"+rowData._id, {crossDomain: true})
+          alert("Approved.");
+          allRequests()
+        }
+        catch(err){
+            console.log(err)
+        }
         } 
       };
     const handleDeclineRow = async (rowData) => {
         const isConfirmed = window.confirm(`Are you sure you want to Decline ${rowData.shopname}?`);
         if (isConfirmed) {
-          alert("Declined");
+        try{
+          const response = await axios.delete(profileHost+"/api/admin/"+rowData._id, {crossDomain: true})
+          console.log(response)
+          alert("Declined.");
+          allRequests()
+        }
+        catch (err){
+            console.log(err)
+        }
         } 
     };
     const buttonTemplate = (rowData) => {
