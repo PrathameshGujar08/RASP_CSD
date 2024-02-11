@@ -6,7 +6,7 @@ import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import axios from "axios";
 
-import { verifiedRoute } from "../../utils/APIroutes";
+import { profileHost, verifiedRoute } from "../../utils/APIroutes";
 
 const Restaurants= ()=>{
     const[restaurants,setRestaurants]=useState([{}]);
@@ -34,7 +34,15 @@ const Restaurants= ()=>{
     const handleDeleteRow = async (rowData) => {
         const isConfirmed = window.confirm(`Are you sure you want to Delete ${rowData.shopname}?`);
         if (isConfirmed) {
-          alert("Deleted");
+            try{
+                const response = await axios.delete(profileHost+"/api/admin/"+rowData._id, {crossDomain: true})
+                console.log(response)
+                alert("Deleted.");
+                allRestaurants()
+              }
+              catch (err){
+                  console.log(err)
+              }
         } 
     };
     const buttonTemplate = (rowData) => {
