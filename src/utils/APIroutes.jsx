@@ -12,5 +12,7 @@ export const itemRoute = `${profileHost}/api/menu/items`
 export const vendorRoute = `${profileHost}/api/profile`
 export const restaurantRoute=`${searchHost}/api/vendor/restaurants`
 export const searchRoute = `${searchHost}/api/search`
+export const unverifiedRoute= `${profileHost}/api/admin/unverified`
+export const verifiedRoute= `${profileHost}/api/admin/verified`
 
 

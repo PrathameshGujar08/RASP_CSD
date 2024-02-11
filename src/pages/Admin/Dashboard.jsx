@@ -1,13 +1,36 @@
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import Button from 'react-bootstrap/Button';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import axios from "axios";
 
-import requests from "../TryData/pendingRequest";
+import { unverifiedRoute } from "../../utils/APIroutes";
 
 const Dashboard=()=>{
+    const[request,setRequest]=useState([{}]);
+    const [loading, setLoading] = React.useState(true);
+    const allRequests = async () => {
+        try {
+            const res = await axios.get(unverifiedRoute, {crossDomain: true});
+            const items = res.data;
+            setRequest(items);
+            setRequest((state) => {
+                return state;
+            });
+            setLoading(false);
+            if (!res.status === 200) {
+                throw new Error(res.error);
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+    useEffect(()=>{
+        allRequests();
+    },[]);
 
     const handleApproveRow = async (rowData) => {
         const isConfirmed = window.confirm(`Are you sure you want to Approve ${rowData.shopname}?`);
@@ -45,6 +68,10 @@ const Dashboard=()=>{
     });
 
     return(
+        <>
+        { (loading)? 
+        <div> Loading</div>
+        :
         <div>
             <div className="dashboard_topDiv"  style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
                
@@ -56,7 +83,7 @@ const Dashboard=()=>{
             </div>
             <div className="menuDiv" style={{marginTop:'1.5rem'}}>
                 <h2>Pending Requests</h2>
-                <DataTable value={requests} 
+                <DataTable value={request} 
                     paginator rows={10} rowsPerPageOptions={[10, 25, 50]} 
                     stripedRows
                     dataKey="id" filters={filters} filterDisplay="row" 
@@ -70,6 +97,8 @@ const Dashboard=()=>{
                 </DataTable>
             </div>
         </div>
+        }
+        </>
     )
 };
 
