@@ -148,6 +148,19 @@ function CartItem(props){
 // order history food itema
 function OrderHistItem(props) {
     const [modal, setModal]=useState(false);
+
+    const itemTemplate = (item) => {
+        return (
+            <div key={item.orderid}>
+                <span>{item.quantity} X {item.orderid}</span>
+            </div>
+        );
+    };
+    const totalPriceTemplate = (items) => {
+        const total = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        return <span>₹ {total}</span>;
+    };
+    
     return (
         <div class="col-lg-4 " >
             <div className="ordercard">
@@ -163,25 +176,19 @@ function OrderHistItem(props) {
                 <hr/>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ lineHeight: '1' }}>
-                        <div>
-                            <strong>ORDER NUMBER</strong><br/>
-                            {props.orderNo}
-                        </div>
+                        <div> <strong>ORDER NUMBER</strong><br/>{props.orderNo}</div>
 
                         <div style={{ marginTop: '1rem' }}>
                             <strong>TOTAL AMOUNT</strong><br/>
-                            ₹ {props.total}
+                            {totalPriceTemplate(props.items)}
                         </div>
 
                         <div style={{ marginTop: '1rem' }}>
                             <strong>ITEMS</strong><br/>
-                            {props.foodItems}
+                            {props.items.map((item) => itemTemplate(item))}
                         </div>
 
-                        <div style={{ marginTop: '1rem', marginBottom: '4rem' }}>
-                            <strong>ORDERED ON</strong><br/>
-                            {props.time}
-                        </div>
+                        <div style={{ marginTop: '1rem', marginBottom: '4rem' }}><strong>ORDERED ON</strong><br/>{props.time}</div>
                     </div>
                     <Button 
                         style={{ marginTop: 'auto' , marginLeft: 'auto'}} variant="outline-danger" 

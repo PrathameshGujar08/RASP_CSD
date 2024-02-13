@@ -5,16 +5,19 @@ import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import io from "socket.io-client";
 
 import Header from "../components/Header";
 import { CartItem } from "../components/Cards";
 import { CartContext } from "../context/cart";
 import cartData from './TryData/cartData';
-import { placeOrderRoute, vendorRoute } from "../utils/APIroutes";
+import { placeOrderRoute, vendorRoute,orderHost } from "../utils/APIroutes";
 
 
 function Cart() {
     const navigate = useNavigate();
+    const socket=io.connect(orderHost);
+
     const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)
     const [vloading, setVLoading] = React.useState(true);
     const[vendor,setVendor]=useState();
@@ -92,7 +95,9 @@ function Cart() {
             if(token.userRole != "user"){
                 navigate("/login");
             }
-            else { setToken(token) }  
+            setToken(token);
+            const custID= token.id;
+            socket.emit("addUser",{"role":"user", "id": custID});
         }
         else {navigate("/login");}
 
@@ -102,6 +107,17 @@ function Cart() {
         else{ setVLoading(false); }
         
     }, []);
+
+    useEffect(()=>{
+        socket.on("receive_status",(data)=>{
+            if(data.status ==="denied"){
+                toast.error(`Your order has been ${data.status}`)    
+            }
+            else {toast.success(`Your order has been ${data.status}`)}
+        });
+    },[socket]);
+
+
     if(vloading){ return( <div>Loading</div> ) }
     return (
         <div >

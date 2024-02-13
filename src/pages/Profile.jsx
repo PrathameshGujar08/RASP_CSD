@@ -37,8 +37,11 @@ function Profile() {
     }
 
     function create_orderHist(items){
+        const img=  '/images/pasta.jpg'
+        const restaurant = 'tech cafe'
+        const time='Nov 12, 2023 at 20:03 PM'
         return(
-            <OrderHistItem id={items.id} img={items.img} restaurant={items.restaurant} status={items.status} orderNo={items.orderNo} total={items.total} foodItems={items.foodItems} time={items.time} key={items.id} />
+            <OrderHistItem id={items._id} img={img} restaurant={restaurant} status={items.status} orderNo={items._id}  items={items.items} time={time} key={items._id} />
         );
     };
 
@@ -67,21 +70,22 @@ function Profile() {
                         <h4 style={{margin: '0'}}>Riyanshi Goyal</h4>
                         <p > riyanshigoyal@iitbhilai.ac.in</p>
                     </div>
-                    {/* <Button 
-                        style={{marginLeft:'12rem', marginBottom:'1rem', backgroundColor: '#584b95', border:'none'}} >
-                        Edit profile
-                    </Button> */}
                 </div>
             </div>
-            {console.log(orders)}
             {/* rest of the profile ie. order history part */}
             <div className="profileMain">
                 <div className="profile_bottomdiv">
                     <h3>Order History</h3>
+                    {(orders)?
+                    <>
                     <div class="row">
-                        {orderHistData.map(create_orderHist)}
+                        {orders.map(create_orderHist)}
 
                     </div> 
+                    </>
+                    :
+                    <><div> You do not have any orders currently</div></>
+                    }
                 </div>
                 
             </div>

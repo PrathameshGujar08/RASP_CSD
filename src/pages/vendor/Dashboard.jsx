@@ -16,7 +16,7 @@ import { getOrderRoute ,orderHost, OrderStatusRoute } from '../../utils/APIroute
 
 function Dashboard() {
     const socket=io.connect(orderHost);
-    const resID=100;
+    // const resID=100; for testing
 
     const navigate = useNavigate();
     const[token,setToken]=useState();
@@ -35,8 +35,7 @@ function Dashboard() {
         try {
             // const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
             const url = vendorRoute.concat("/").concat((jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')))).id);
-            
-            // console.log(token);
+        
             const res = await axios.get(url, {crossDomain: true});
             const items = res.data;
             setVendor(items[0]);
@@ -45,7 +44,6 @@ function Dashboard() {
             if (!res.status === 200) {
                 throw new Error(res.error);
             }
-            // console.log(items);
         }
         catch (err) {
             console.log(err);
@@ -135,14 +133,16 @@ function Dashboard() {
             vendorInfo();
             fetchOrders();
             const resID= token.id;
-            socket.emit("addUser",resID);
+            socket.emit("addUser",{"role":"vendor", "id": resID});
         }
         else {navigate("/login");}
     },[]);
 
     useEffect(()=>{
-        socket.on("recieve_order",(data)=>{
-            console.log(data);
+        socket.on("receive_order",(data)=>{
+            toast.success(`You have a new order from ${data.fullName}`)
+            // setOrders([...orders,data]);
+            fetchOrders();
         });
     },[socket]);
 
