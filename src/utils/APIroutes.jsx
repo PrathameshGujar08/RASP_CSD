@@ -2,6 +2,7 @@
 export const host = "http://localhost:8000"
 export const profileHost = "http://localhost:3500"
 export const searchHost = "http://localhost:5432"
+export const orderHost ="http://localhost:8500";
 
 export const registerRoute = `${host}/api/auth/register`
 export const loginRoute = `${host}/api/auth/login`
@@ -14,5 +15,11 @@ export const restaurantRoute=`${searchHost}/api/vendor/restaurants`
 export const searchRoute = `${searchHost}/api/search`
 export const unverifiedRoute= `${profileHost}/api/admin/unverified`
 export const verifiedRoute= `${profileHost}/api/admin/verified`
+
+export const placeOrderRoute= `${orderHost}/api/order/placeOrder`
+export const getOrderRoute=`${orderHost}/api/order/getOrders`
+export const completedOrderRoute=`${orderHost}/api/order/getCompletedOrders`
+export const orderHistoryRoute =`${orderHost}/api/order/orderhistory`
+export const OrderStatusRoute=`${orderHost}/api/order/statusUpdate`
 
 

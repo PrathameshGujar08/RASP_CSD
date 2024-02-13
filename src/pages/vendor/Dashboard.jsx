@@ -1,16 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import {ref,uploadBytesResumable,getDownloadURL} from "firebase/storage";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
 import { vendorRoute } from "../../utils/APIroutes";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import io from "socket.io-client";
 
 import storage from '../../services/firebase';
+import { getOrderRoute ,orderHost, OrderStatusRoute } from '../../utils/APIroutes';
 
 function Dashboard() {
+    const socket=io.connect(orderHost);
+    const resID=100;
+
     const navigate = useNavigate();
     const[token,setToken]=useState();
 
@@ -20,7 +27,9 @@ function Dashboard() {
     const [imageURL, setImageURL] = React.useState()
     const [preview, setPreview] = React.useState()
     const[loading,setLoading]=useState(true);
+    const[orderLoading, setOrderLoading]=useState(true);
     const[vendor,setVendor]=useState();
+    const[orders,setOrders]=useState([]);
 
     const vendorInfo = async () => {
         try {
@@ -65,8 +74,6 @@ function Dashboard() {
                 const percent = Math.round(
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
- 
-                // update progress
                 setPercent(percent);
             },
             (err) => console.log(err),
@@ -97,8 +104,27 @@ function Dashboard() {
             
         }
     }
-
-    useEffect(() => {
+    // get the current orders 
+    const fetchOrders= async()=>{
+        try {
+            const tokens = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+            const url= getOrderRoute.concat("/").concat(tokens.id);
+            const res = await axios.get(url, {crossDomain: true});
+            const items = res.data;
+            setOrders(items);
+            setOrders((state) => {
+                return state;
+            });
+            setOrderLoading(false);
+            if (!res.status === 200) {
+                throw new Error(res.error);
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+    useEffect(()=>{
         if(localStorage.getItem("food-delivery-token"))
         {
             const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
@@ -106,11 +132,22 @@ function Dashboard() {
             if(token.userRole != "vendor"){
                 navigate("/login");
             }
+            vendorInfo();
+            fetchOrders();
+            const resID= token.id;
+            socket.emit("addUser",resID);
         }
         else {navigate("/login");}
-        vendorInfo();
-        // setLoading(false);
+    },[]);
 
+    useEffect(()=>{
+        socket.on("recieve_order",(data)=>{
+            console.log(data);
+        });
+    },[socket]);
+
+    // use effect to set the selected file to update profile image
+    useEffect(() => {
         if (!selectedFile) {
             setPreview(undefined)
             return
@@ -119,15 +156,96 @@ function Dashboard() {
         setPreview(objectUrl)
         return () => URL.revokeObjectURL(objectUrl)
     }, [selectedFile])
+
+    // accept, decline, complete order button functionality
+    const handleAcceptRow = async (rowData) => {
+        const status={
+            orderID:rowData._id,
+            status: "confirm"
+        }
+        try{const res = await axios.post(OrderStatusRoute,status);}
+        catch(err){toast.error("Error processing the order")}
+        fetchOrders();
+         
+    };
+    const handleDeclineRow = async (rowData) => {
+        const isConfirmed = window.confirm(`Are you sure you want to decline this order ?`);
+        if (isConfirmed) {
+            const status={
+                orderID:rowData._id,
+                status: "denied"
+            }
+            try{
+                const res = await axios.post(OrderStatusRoute,status);
+                toast.success("The order request has been declined")
+            }
+            catch(err){toast.error("Error processing the order")}
+            fetchOrders();
+        } 
+    };
+    const handleCompletedRow = async (rowData) => {
+        const status={
+            orderID:rowData._id,
+            status: "completed"
+        }
+        try{
+            const res = await axios.post(OrderStatusRoute,status);
+            toast.success("the order is succesfully completed")
+        }
+        catch(err){toast.error("Error processing the order")}
+        fetchOrders();
+    };
+    const buttonTemplate = (rowData) => {
+        if(rowData.status==="confirm"){
+            return(
+                <div style={{display: 'flex', flexDirection: 'column' ,alignItems:"center"}}>
+                    <Button
+                        variant="warning" size="sm" style={{ width: '100px' }} onClick={() => handleCompletedRow(rowData)}
+                    >Completed
+                    </Button>
+                </div>
+            )
+        }
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Button
+                    variant="success" size="sm" style={{ marginBottom: '10px', width: '100px' }} onClick={() => handleAcceptRow(rowData)}
+                >Accept
+                </Button>
+
+                <Button
+                    variant="danger" size="sm" style={{ marginBottom: '10px', width: '100px' }}  onClick={() => handleDeclineRow(rowData)}
+                >Decline
+                </Button>
+                
+                <Button
+                    variant="warning" size="sm" style={{ width: '100px' }}  onClick={() => handleCompletedRow(rowData)}
+                >Completed
+                </Button>
+            </div>
+        );
+    };
+    // ordered Food Items template
+    const itemTemplate=(rowData)=>{
+        return(
+            <div>
+            {rowData.items.map((item, index) => (
+                <div key={index}>
+                    <span>{item.orderid}: {item.quantity} x {item.price}</span>
+                </div>
+            ))}
+        </div>
+        )
+    }
     
-    if(loading) return ( <div> Loading</div> )
+    if(loading || orderLoading) return ( <div> Loading</div> )
     return (
         <div>
             {/* restaurant provbile image and name part */}
             <div className="dashboard_topDiv" style={{display: 'flex'}}>
                 <div style={{display:'flex', gap:'1.5rem', alignItems:'flex-end', width:'100%'}}>
-                    <img  src={vendor.img} alt="Product" />   {/* write src address from backend */}
-                    <h1> {token.userID}</h1>                         {/* write restaurant name from backend */}
+                    <img  src={vendor.img} alt="Product" />  
+                    <h1> {token.userID}</h1>                        
                     <Button 
                         onClick={()=> setModal(!modal)}
                         style={{ marginLeft: 'auto', backgroundColor:'#584b95' }}> 
@@ -157,6 +275,31 @@ function Dashboard() {
             </div>
             <ToastContainer />
             {/* dashboard content */}
+            {/* current orders */}
+            <div className="menuDiv" >
+                    <h2 style={{marginTop:'1.5rem'}}>Current Orders</h2>
+                    <br/>
+                    {(orders)?
+                    <>
+                    <DataTable value={orders} 
+                        paginator rows={10} rowsPerPageOptions={[10, 25, 50]} 
+                        stripedRows
+                        dataKey="id" 
+                        >
+                        <Column field="fullName" header="Customer" ></Column>
+                        <Column header="Items" body={itemTemplate}></Column>
+                        <Column field="instruction" header="Instructions"></Column>
+                        <Column field ="phone" header="Phone No." ></Column>
+                        <Column field="address" header="address"  style={{width:"15%"}}></Column>
+                        <Column field ="paymentMode" header="Payment" ></Column>
+                        <Column body={buttonTemplate}></Column>
+                    </DataTable>
+                    <ToastContainer/>
+                    </>
+                    :
+                    <><div> You do not have any orders currently</div></>
+                    }
+            </div>
         </div>
     );
 }

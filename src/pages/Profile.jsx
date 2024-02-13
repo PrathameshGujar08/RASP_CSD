@@ -1,14 +1,40 @@
 import React, {useEffect,useState} from "react";
 import {useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'
+import axios from "axios";
 import Header from "../components/Header";
 import { OrderHistItem } from "../components/Cards";
 import orderHistData from "./TryData/orderHistData";
+
+import { orderHistoryRoute } from "../utils/APIroutes";
+
 // user profile page
 function Profile() {
     const navigate = useNavigate();
     const[token,setToken]=useState();
     const[loading,SetLoading]=useState(true);
+    const[orderLoading, setOrderLoading]=useState(true);
+    const[orders,setOrders]=useState([]);
+
+    const fetchOrders= async()=>{
+        try {
+            const tokens = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+            const url= orderHistoryRoute.concat("/").concat(tokens.id);
+            const res = await axios.get(url, {crossDomain: true});
+            const items = res.data;
+            setOrders(items);
+            setOrders((state) => {
+                return state;
+            });
+            setOrderLoading(false);
+            if (!res.status === 200) {
+                throw new Error(res.error);
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 
     function create_orderHist(items){
         return(
@@ -24,11 +50,12 @@ function Profile() {
             if(token.userRole != "user"){
                 navigate("/login");
             }
+            fetchOrders();
         }
         else {navigate("/login");}
         SetLoading(false);
     }, []);
-    if(loading) return ( <div> Loading</div> )
+    if(loading || orderLoading) return ( <div> Loading</div> )
     return (
         <div >
             <Header/>
@@ -46,7 +73,7 @@ function Profile() {
                     </Button> */}
                 </div>
             </div>
-
+            {console.log(orders)}
             {/* rest of the profile ie. order history part */}
             <div className="profileMain">
                 <div className="profile_bottomdiv">

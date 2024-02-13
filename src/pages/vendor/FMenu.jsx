@@ -31,8 +31,6 @@ function FMenu() {
             // console.log("wohooo!!! " + res)
             setVendorMenu(items);
             setVendorMenu((state) => {
-                console.log("done!!!!");
-                console.log(vendorMenuu);
                 return state;
             });
             setLoading(false);

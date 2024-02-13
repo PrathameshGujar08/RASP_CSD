@@ -3,12 +3,14 @@ import {useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from "../components/Header";
 import { CartItem } from "../components/Cards";
 import { CartContext } from "../context/cart";
 import cartData from './TryData/cartData';
-import { vendorRoute } from "../utils/APIroutes";
+import { placeOrderRoute, vendorRoute } from "../utils/APIroutes";
 
 
 function Cart() {
@@ -16,6 +18,52 @@ function Cart() {
     const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)
     const [vloading, setVLoading] = React.useState(true);
     const[vendor,setVendor]=useState();
+    const[token,setToken]=useState();
+    const[order,setOrder]=useState({
+        instruction : "",
+        phone: 0,
+        fullName: "",
+        address: ""
+    });
+    const handleChange = (event) => {
+        setOrder({...order, [event.target.name] : event.target.value})
+    }
+
+    // handle submit order after clicking on proceed to pay
+    const handleOrder =async(event)=>{
+
+        // check if the required fields are entered correctly or not
+        const phonePattern = /[6-9]\d{9}/;
+        if (order.fullName.trim() === "" || order.address.trim() === "" || !phonePattern.test(order.phone)){
+            toast.error("Please fill all the details correctly");
+        }
+        else{
+            const itemList= cartItems.map((item) => {
+                return {
+                    orderid: item.title,
+                    quantity: item.quantity,
+                    price: item.price
+                };
+            });
+            const newOrder= {
+                token: token,
+                items : itemList,
+                instruction : order.instruction,
+                paymentMode : "COD",
+                restID: vendor.id,
+                phone: order.phone,
+                fullName: order.fullName,
+                address: order.address
+            }  
+            try{
+                const response = await axios.post(placeOrderRoute, newOrder);                
+                toast.success("Your order is sent to the restaurant");
+            } catch(error){
+                toast.error("Could not place order.")
+            }
+        }
+
+    }
 
     const vendorInfo = async () => {
             try {
@@ -31,8 +79,6 @@ function Cart() {
             catch (err) {
                 console.log(err);
             }
-        
-        
     }
     function create_cart(items){
         return(
@@ -46,6 +92,7 @@ function Cart() {
             if(token.userRole != "user"){
                 navigate("/login");
             }
+            else { setToken(token) }  
         }
         else {navigate("/login");}
 
@@ -66,16 +113,15 @@ function Cart() {
                         {/* delivery details div */}
                         <div className='cartLeft'>
                             <h4>Delivery Details</h4>
-                            <input className="cartInput" type="text"  placeholder="Fullname" name="suggestions"/> 
-                            <input className="cartInput" type="text"  placeholder="Mobile No." name="suggestions"/> 
-                            <input className="cartInput" type="text"  placeholder="Delivery Address" name="suggestions"/> 
-                            <Button style={{width:'100%', marginTop:'2rem'}} variant="success" >PROCEED TO PAY</Button>
+                            <input className="cartInput" type="text"  placeholder="Fullname" name="fullName" onChange={(e) => handleChange(e)}/> 
+                            <input className="cartInput" type="text"  placeholder="Mobile No." name="phone" onChange={(e) => handleChange(e)}/> 
+                            <input className="cartInput" type="text"  placeholder="Delivery Address" name="address" onChange={(e) => handleChange(e)}/> 
+                            <Button style={{width:'100%', marginTop:'2rem'}} variant="success" onClick={(e)=>{handleOrder(e)}}>PROCEED TO PAY</Button>
                             
                         </div>
 
                         {/* food cart and billing div */}
                         <div className='cartRight'>
-
                             {/* restaurant name and photo */}
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <img
@@ -87,15 +133,15 @@ function Cart() {
                             </div>
 
                             {/* food items */}
-                            {/* {console.log("Cart is here")};
-                            {console.log(cartItems)} */}
                             {cartItems.map(create_cart)}
                             
                             {/* suggestion box */}
                             <input className="cartInput"
                                 type="text" 
                                 placeholder="Any suggestions?" 
-                                name="suggestions"/> 
+                                name="instruction"
+                                onChange={(e) => handleChange(e)}
+                            />     
                             <hr/>
 
                             {/* bill details */}
@@ -116,6 +162,7 @@ function Cart() {
                                 <div style={{ marginLeft: 'auto ', marginRight:'0'}}> &#8377; {getCartTotal()} </div>
                             </div>
                         </div>
+                        <ToastContainer/>
                     </> 
                     : 
                     <>
