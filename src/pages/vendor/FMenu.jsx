@@ -7,6 +7,8 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { Dropdown } from 'primereact/dropdown';
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 import vendorMenu from '../TryData/vendorMenu';
 import VendorAddItem from '../../components/VendorAddItem';
@@ -51,6 +53,7 @@ function FMenu() {
         if (isConfirmed) {
           // Implement logic to delete the row from the state or API
           const res = await axios.delete(url+"/"+rowData.name)
+          toast.success("Deleted");
           allItems();
         } 
       };
@@ -183,6 +186,7 @@ function FMenu() {
                 }
 
             </div>
+            <ToastContainer/>
         </div>
     );
 }

@@ -10,12 +10,8 @@ import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { jwtDecode } from 'jwt-decode'
-// import { toast } from "react-toastify";
-
-// import { searchRoute } from "../utils/APIroutes";
 
 function Header({ getSearchItems}) {
-    // const searchUrl=searchRoute.concat("/getQuery");
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
     const[token, setToken]=React.useState();
@@ -42,25 +38,6 @@ function Header({ getSearchItems}) {
 
     const searchFunction = async (e) => {
         navigate(`/search/${sQuery}`);
-        // try{
-        //     const { data } = await axios.post(searchUrl, 
-        //         {
-        //             query : sQuery,
-        //         }
-        //     )
-        //     if(data)
-        //     {
-        //         setsLoading(false);
-        //         getSearchItems(data,sQuery);
-        //     }
-        //     else{
-        //         console.log("error")
-        //     }
-
-        // } catch (err)
-        // {
-        //     toast.error("Error", err);
-        // }
     }
     return (
         <div className="navbar-container">

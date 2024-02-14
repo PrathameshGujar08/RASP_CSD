@@ -76,12 +76,16 @@ function Restaurant() {
         vendorInfo();
         allItems();
     }, []);
-    if (iloading || vloading) {
-        return <div>Loading...</div>;
-    }
     return (
+        <>
+        <Header/>
+        {(iloading || vloading)?
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
+            <img src={process.env.PUBLIC_URL + '/images/loading.gif' } alt ="loading" />
+            </div>
+        :
         <div>
-            <Header/>
+            
             <h1 id="resHead">{vendor.shopname}</h1>
             <div className='hr_food'> <hr className="horizontalLine"/></div>
             
@@ -96,8 +100,10 @@ function Restaurant() {
                     </div>
                 </div>
             </div>
-            
         </div>
+        }
+        
+        </>
 
     );
 }

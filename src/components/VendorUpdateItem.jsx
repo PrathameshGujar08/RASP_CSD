@@ -24,7 +24,7 @@ function VendorUpdateItem({ rowDataForUpdate }) {
     const [product,setProduct] =React.useState({
         name: rowDataForUpdate.name || "",
         description: rowDataForUpdate.description || "",
-        price: rowDataForUpdate.price || 0,
+        price: rowDataForUpdate.price || Number,
         category: rowDataForUpdate.category || "",
         stock: rowDataForUpdate.stock || "Available",
 
@@ -82,9 +82,10 @@ function VendorUpdateItem({ rowDataForUpdate }) {
     };
 
     const submitProduct=async(event)=>{
-        // console.log(product);
-        // console.log("YAYAYA" + PreviousItemName);
-        // console.log(imageURL);
+        if (product.name.trim() === "" || product.category.trim() === "" || isNaN(product.price) || product.price===0){
+            toast.error("Please fill all the details correctly");
+        }
+        else{
         const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
         const newProduct={
             name: product.name,
@@ -107,6 +108,7 @@ function VendorUpdateItem({ rowDataForUpdate }) {
         
         } catch(error){
             console.log(error)
+        }
         }
     };
     useEffect(() => {

@@ -77,8 +77,8 @@ function Search() {
             </>
             :
             <>  
-            <div >
-                Loading
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
+                <img src={process.env.PUBLIC_URL + '/images/loading.gif' } alt ="loading" />
             </div>
             </>
             }

@@ -1,17 +1,21 @@
 import React , {useEffect, useState} from "react";
 import { DataTable } from 'primereact/datatable';
+import { useNavigate } from 'react-router-dom';
 import { Column } from 'primereact/column';
 import Button from 'react-bootstrap/Button';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import { jwtDecode } from 'jwt-decode'
 import axios from "axios";
 import { profileHost } from "../../utils/APIroutes";
 
 import { unverifiedRoute } from "../../utils/APIroutes";
 
 const Dashboard=()=>{
+    const navigate = useNavigate();
+
     const[request,setRequest]=useState([{}]);
     const [loading, setLoading] = React.useState(true);
     const [token,setToken]=useState();
@@ -33,7 +37,16 @@ const Dashboard=()=>{
         }
     }
     useEffect(()=>{
-        allRequests();
+        if(localStorage.getItem("food-delivery-token"))
+        {
+            const token = jwtDecode(JSON.parse(localStorage.getItem('food-delivery-token')));
+            setToken(token)
+            if(token.userRole != "admin"){
+                navigate("/adminlogin");
+            }
+            allRequests();            
+        }
+        else {navigate("/adminlogin");}
     },[]);
 
     const handleApproveRow = async (rowData) => {

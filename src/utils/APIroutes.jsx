@@ -1,4 +1,10 @@
 // Contains link to divert your request to server
+
+// export const host = "http://localhost:8000"
+// export const profileHost = "http://localhost:3500"
+// export const searchHost = "http://localhost:5432"
+// export const orderHost ="http://localhost:8500"
+
 export const host = "https://rasp-login-service.onrender.com"
 export const profileHost = "https://rasp-profile-management-service.onrender.com"
 export const searchHost = "https://rasp-search-service.onrender.com"

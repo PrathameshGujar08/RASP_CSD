@@ -120,8 +120,14 @@ function Cart() {
 
     if(vloading){ return( <div>Loading</div> ) }
     return (
+        <>
+        <Header/>
+        {(vloading)?
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
+            <img src={process.env.PUBLIC_URL + '/images/loading.gif' } alt ="loading" />
+            </div>
+        :
         <div >
-            <Header/>
             <div className="cartMain">
                 <div className='cartCont'>
                     {cartItems.length >0 ? 
@@ -132,7 +138,7 @@ function Cart() {
                             <input className="cartInput" type="text"  placeholder="Fullname" name="fullName" onChange={(e) => handleChange(e)}/> 
                             <input className="cartInput" type="text"  placeholder="Mobile No." name="phone" onChange={(e) => handleChange(e)}/> 
                             <input className="cartInput" type="text"  placeholder="Delivery Address" name="address" onChange={(e) => handleChange(e)}/> 
-                            <Button style={{width:'100%', marginTop:'2rem'}} variant="success" onClick={(e)=>{handleOrder(e)}}>PROCEED TO PAY</Button>
+                            <Button style={{width:'100%', marginTop:'2rem'}} variant="success" onClick={(e)=>{handleOrder(e)}}>PLACE ORDER</Button>
                             
                         </div>
 
@@ -189,6 +195,8 @@ function Cart() {
                 </div>
             </div>
         </div>
+        }
+        </>
     );
 }
 

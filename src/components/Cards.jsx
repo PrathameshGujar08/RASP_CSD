@@ -160,6 +160,9 @@ function OrderHistItem(props) {
         const total = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
         return <span>₹ {total}</span>;
     };
+    const img=  '/images/pasta.jpg'
+    const restaurant = 'tech cafe'
+    const time='Nov 12, 2023 at 20:03 PM'
     
     return (
         <div class="col-lg-4 " >
@@ -188,7 +191,9 @@ function OrderHistItem(props) {
                             {props.items.map((item) => itemTemplate(item))}
                         </div>
 
-                        <div style={{ marginTop: '1rem', marginBottom: '4rem' }}><strong>ORDERED ON</strong><br/>{props.time}</div>
+                        <div style={{ marginTop: '1rem', marginBottom: '4rem' }}>
+                            {/* <strong>ORDERED ON</strong><br/>{props.time} */}
+                        </div>
                     </div>
                     <Button 
                         style={{ marginTop: 'auto' , marginLeft: 'auto'}} variant="outline-danger" 
@@ -198,7 +203,8 @@ function OrderHistItem(props) {
                     { modal && <div className="profileModal">
                         <div className="profileOverlay">
                             <div className="profileModal-content">
-                                <OrderDetails/>
+                                <OrderDetails id={props.id} img={props.img} restaurant={props.restaurant} status={props.status} orderNo={props.id}  items={props.items} 
+                                   phone={props.phone} address={props.address} paymentMode={props.paymentMode} time={time} key={props._id}/>
                                 <Button className="profileClosebtn" onClick={()=> setModal(!modal)}><i class="fa-solid fa-xmark"></i></Button>
                             </div>
                         </div>

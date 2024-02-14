@@ -80,6 +80,10 @@ function VendorAddItem() {
     };
 
     const submitProduct=async(event)=>{
+        if (product.name.trim() === "" || product.category.trim() === "" || isNaN(product.price)){
+            toast.error("Please fill all the details correctly");
+        }
+        else{
         const token = JSON.parse(localStorage.getItem('food-delivery-token'));
         const newProduct={
             name: product.name,
@@ -111,6 +115,7 @@ function VendorAddItem() {
             price: Number,
             category:""
         });
+        }
     };
     useEffect(() => {
         if (!selectedFile) {
