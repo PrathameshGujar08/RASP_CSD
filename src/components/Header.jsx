@@ -66,7 +66,7 @@ function Header({ getSearchItems}) {
         <div className="navbar-container">
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container >
-                    <img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" />
+                    <Link to="/"><img className = "imgheader" src={process.env.PUBLIC_URL + '/images/IIT Bhilai - White Logo.png' } alt ="logo" /></Link>
                     <h1>CAMPDEL</h1>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
