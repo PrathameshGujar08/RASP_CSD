@@ -2,7 +2,7 @@
 export const host = "https://rasp-login-service.onrender.com"
 export const profileHost = "https://rasp-profile-management-service.onrender.com"
 export const searchHost = "https://rasp-search-service.onrender.com"
-export const orderHost ="http://localhost:8500";
+export const orderHost ="https://rasp-order-service.onrender.com";
 
 export const registerRoute = `${host}/api/auth/register`
 export const loginRoute = `${host}/api/auth/login`
