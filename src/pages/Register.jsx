@@ -95,7 +95,7 @@ const c_handleSubmit = async(event) => {
         }, 2000);
         
     } catch(error){
-      toast.error(error, toastconf)
+      toast.error("Error registering user", toastconf)
     }
       } 
   }     
