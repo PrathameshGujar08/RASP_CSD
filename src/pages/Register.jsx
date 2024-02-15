@@ -180,7 +180,6 @@ const v_handleSubmit = async(event) => {
           
             <input 
             type={type} 
-            style={{width:'15.5rem'}}
             placeholder="Password" 
             name="password"  required
             onChange={(e) => v_handleChange(e)}
