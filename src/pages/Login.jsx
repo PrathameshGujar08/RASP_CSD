@@ -146,7 +146,6 @@ const v_handleSubmit = async(event) => {
           </div>
           {console.log(v_values)}
         </form>
-        <ToastContainer/>
       </div>
       
 
@@ -180,7 +179,6 @@ const v_handleSubmit = async(event) => {
           </div>
           {console.log(c_values)}
         </form>
-        <ToastContainer/>
 
       </div>
       
@@ -220,6 +218,7 @@ const v_handleSubmit = async(event) => {
         </div>
 
       </div>
+      <ToastContainer/>
     </div>
   )
 }

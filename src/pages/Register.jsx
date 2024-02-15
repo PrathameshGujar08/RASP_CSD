@@ -124,7 +124,7 @@ const v_handleSubmit = async(event) => {
         navigate("/login")
       }, 2000);
     } catch(error){
-      toast.error(error, toastconf)
+      toast.error("Error registering vendor", toastconf)
     }
 
     }     
