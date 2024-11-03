@@ -8,6 +8,8 @@ import { RName , SearchRest} from '../components/Cards';
 import Footer from '../components/Footer';
 import { restaurantRoute } from '../utils/APIroutes';
 
+import ChatbotComponent from "../components/Chatbot/chatbot";
+
 function Home(){
     const [restaurants, setRestaurants] = React.useState([{}]);
     const [loading, setLoading] = React.useState(true);
@@ -67,6 +69,7 @@ function Home(){
         {/* <section>
             <Footer/> 
         </section> */}
+        <ChatbotComponent />
         </div>
         }
         </>
