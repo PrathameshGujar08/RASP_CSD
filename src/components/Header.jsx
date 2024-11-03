@@ -10,7 +10,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { jwtDecode } from 'jwt-decode'
-
+  
 function Header({ getSearchItems}) {
     const[show, setShow]=React.useState(false);
     const navigate = useNavigate();
@@ -87,6 +87,7 @@ function Header({ getSearchItems}) {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+   
         </div>
     );
 }
